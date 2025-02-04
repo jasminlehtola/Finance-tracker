@@ -30,7 +30,7 @@ let events = [
       income: true,
       expense: false,
       sum: 400,
-      category: "Rent incomes",
+      category: "Rent",
       content: "rent from tenant",
       date: "6.1.2025"
     }
