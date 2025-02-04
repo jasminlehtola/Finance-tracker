@@ -28,11 +28,14 @@ const App = () => {
 
   // searches all the events
   useEffect(() => {
-    eventService.getAll().then(events =>
+    eventService.getAll().then(events => {
+      console.log("Data from backend:", events);
       setEvents(events)
-    )
-    console.log("printing events")
+  })
+    console.log("printing events..")
   }, [])
+
+
 
 
 const mappedEvents = () => {

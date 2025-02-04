@@ -1,3 +1,2 @@
 GET http://localhost:3001/api/frontpage/3
 Content-Type: application/json
-

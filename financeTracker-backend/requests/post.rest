@@ -1,0 +1,11 @@
+POST http://localhost:3001/api/frontpage
+Content-Type: application/json
+
+{
+      "income": false,
+      "expense": true,
+      "sum": 29,
+      "category": "Restaurants",
+      "content": "dinner",
+      "date": "10.1.2025"
+}
