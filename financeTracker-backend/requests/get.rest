@@ -1,2 +1,2 @@
-GET http://localhost:3001/api/frontpage/3
+GET http://localhost:3001/api/frontpage
 Content-Type: application/json

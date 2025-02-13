@@ -1,84 +1,62 @@
 const eventsRouter = require('express').Router()
 const logger = require('../utils/logger')
+const config = require('../utils/config')
+const { Event } = require('../models/event')
+require('dotenv').config()
+const { Sequelize, QueryTypes } = require('sequelize')
+const express = require('express')
+const app = express()
 
 
-let events = [
-    {
-      id: "1",
-      income: false,
-      expense: true,
-      sum: 250,
-      category: "Restaurants",
-      content: "restaurant with Michael",
-      date: "3.1.2025"
-    },
-    {
-      id: "2",
-      income: false,
-      expense: true,
-      sum: 45,
-      category: "Food",
-      content: "food market",
-      date: "5.1.2025"
-    },
-    {
-      id: "3",
-      income: true,
-      expense: false,
-      sum: 400,
-      category: "Rent",
-      content: "rent from tenant",
-      date: "6.1.2025"
+eventsRouter.get('/', async (req, res) => {
+  const events = await Event.findAll()
+  res.json(events)
+})
+
+eventsRouter.get('/:id', async (req, res) => {
+  try {
+    const id = req.params.id
+    const event = await Event.findByPk(id) // Searches single event based on id
+    if (!event) {
+      return res.status(404).json({ error: "Event not found" })
     }
-  ]
-
-
-eventsRouter.get('/', (request, response) => {
-    response.json(events)
-  })
-  
-
-eventsRouter.get('/:id', (request, response) => {
-    const id = request.params.id
-    const event = events.find(event => event.id === id)
-
-    if (event) {
-      response.json(event)
-    } else {
-      response.status(404).end()
-    }
-  })
-
-eventsRouter.post('/', (request, response) => {
-    const event = request.body
-
-    // Checking that event contains all the needed information
-    if (!event.sum || !event.category || !event.content || !event.date) {
-      return response.status(400).json({error: "Missing required fields"})
+    res.json(event)
+  } catch (error) {
+    res.status(500).json({ error: error.message })
   }
+})
 
-  const newEvent = {
-    id: (events.length + 1).toString(), // Simple ID-logic
-    income: event.income,
-    expense: event.expense,
-    sum: event.sum,
-    category: event.category,
-    content: event.content,
-    date: event.date
-}
-
-    events.push(newEvent) // Adds event to the list
-    logger.info("New event added:", newEvent)
-
-    response.status(201).json(newEvent) 
-  })
-
-eventsRouter.delete('/:id', (request, response) => {
-    const id = request.params.id
-    events = events.filter(event => event.id !== id)
+eventsRouter.post('/', async (req, res) => {
+  try {
+    const event = await Event.create(req.body)
+    return res.json(event)
+  } catch(error) {
+    return res.status(400).json({ error })
+  }
+})
   
-    logger.info("Deleted event number", id)
-    response.status(204).end()
-  })
 
-  module.exports = eventsRouter
+eventsRouter.delete('/:id', async (req, res) => {
+  try {
+    const id = req.params.id
+    // Finds the event and deletes it from the database
+    const deletedEvent = await Event.destroy({
+      where: { id: id }
+    });
+
+    if (!deletedEvent) {
+      return res.status(404).json({ error: "Event not found" })
+    }
+
+    logger.info("Deleted event number", id)
+    res.status(204).end()
+  } catch (error) {
+    console.error("Error deleting event:", error)
+    res.status(500).json({ error: "Internal server error" })
+  }
+})
+  
+
+module.exports = eventsRouter
+  
+ 

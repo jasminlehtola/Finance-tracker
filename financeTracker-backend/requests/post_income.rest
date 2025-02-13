@@ -1,0 +1,11 @@
+POST http://localhost:3001/api/frontpage
+Content-Type: application/json
+
+{
+      "user_id": 1,
+      "type": "expense",
+      "sum": 150,
+      "category": "Pharmacy",
+      "title": "more medicines",
+      "date": "2025-01-25"
+}

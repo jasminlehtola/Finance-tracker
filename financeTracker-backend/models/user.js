@@ -1,1 +1,0 @@
-// tähän skeema tietokannalle. Kertoo miten käyttäjä-oliot tulee tallettaa tietokantaan.

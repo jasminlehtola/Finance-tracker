@@ -40,14 +40,14 @@ const App = () => {
 
 const mappedEvents = () => {
   return events.map(event => {
-    if (event.income) {
+    if (event.type == "income") {
       event.sum = Math.abs(event.sum);  // Makes sure that the sum is positive
-    } else if (event.expense) {
+    } else  {
       event.sum = -Math.abs(event.sum); // Transforms sum into a negative number
     }
   return (
     <li key={event.id}>
-      {event.sum}€ - category: {event.category} - description: {event.content} - date: {event.date}
+      {event.sum}€ - category: {event.category} - description: {event.title} - date: {event.date}
     </li>
   )
 })
