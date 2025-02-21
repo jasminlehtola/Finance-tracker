@@ -1,28 +1,26 @@
-const app = require('./app') 
-const config = require('./utils/config')
+const express = require('express')
+const app = express()
+const cors = require('cors')
+const { PORT } = require('./utils/config')
+const { connectToDatabase } = require('./utils/db')
 const logger = require('./utils/logger') 
+const eventsRouter = require('./controllers/events')
+// const usersRouter = require('./controllers/users')
+const loginRouter = require('./controllers/login')
 
-require('dotenv').config()
+app.use(cors())
+app.use(express.json())
+app.use('/api/frontpage', eventsRouter)
+// app.use('/api/users', usersRouter)  // mikä tää sivu on? 
+app.use('/api/login', loginRouter)
 
-const { Sequelize, QueryTypes } = require('sequelize')
-
-
-app.listen(config.PORT, () => {
-    logger.info(`Server running on port ${config.PORT}`)
-  })  
-
-
-const sequelize = new Sequelize(process.env.DATABASE_URL)
-
-const main = async () => {
-  try {
-    await sequelize.authenticate()
-    await sequelize.sync()
-    console.log('Database connected and synchronized.')
-    // sequelize.close()
-  } catch (error) {
-    console.error('Unable to connect to the database:', error)
-  }
+const start = async () => {
+  await connectToDatabase()
+  app.listen(PORT, () => {
+    logger.info(`Server running on port ${PORT}`)
+  })
 }
 
-main()
+start()
+
+

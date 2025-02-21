@@ -1,0 +1,6 @@
+PUT http://localhost:3001/api/frontpage/5
+Content-Type: application/json
+
+{
+      "sum": 20
+}

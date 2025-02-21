@@ -2,9 +2,10 @@ POST http://localhost:3001/api/frontpage
 Content-Type: application/json
 
 {
+      "user_id": 1,
       "type": "expense",
-      "sum": 29,
+      "sum": 21,
       "category": "Restaurants",
-      "title": "dinner",
-      "date": "10.1.2025"
+      "title": "Mcdonalds",
+      "date": "2025-01-30"
 }

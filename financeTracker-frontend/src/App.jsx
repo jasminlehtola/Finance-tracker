@@ -1,22 +1,15 @@
 import { useState, useEffect, useRef } from 'react'
 import eventService from './services/events'
+import Login from "./pages/login"
+import Home from "./pages/home"
+import Register from "./pages/register"
+import Frontpage from "./pages/frontpage"
 
 import {
   BrowserRouter as Router,
-  Routes, Route, Link
+  Routes, Route, Link, Navigate
 } from 'react-router-dom'
 
-const Frontpage = () => (
-  <div> <h2>Frontpage</h2> </div>
-)
-
-const Savings = () => (
-  <div> <h2>Savings</h2> </div>
-)
-
-const Graphs = () => (
-  <div> <h2>Graphs</h2> </div>
-)
 
 
 const App = () => {
@@ -25,56 +18,17 @@ const App = () => {
   }
 
   const [events, setEvents] = useState([])
-
-  // searches all the events
-  useEffect(() => {
-    eventService.getAll().then(events => {
-      console.log("Data from backend:", events);
-      setEvents(events)
-  })
-    console.log("printing events..")
-  }, [])
-
-
-
-
-const mappedEvents = () => {
-  return events.map(event => {
-    if (event.type == "income") {
-      event.sum = Math.abs(event.sum);  // Makes sure that the sum is positive
-    } else  {
-      event.sum = -Math.abs(event.sum); // Transforms sum into a negative number
-    }
-  return (
-    <li key={event.id}>
-      {event.sum}€ - category: {event.category} - description: {event.title} - date: {event.date}
-    </li>
-  )
-})
-}
+  const [user, setUser] = useState(null); // Tallennetaan käyttäjätiedot
 
   
   return (
     <Router>
-      <div>
-        <Link style={padding} to="/">frontpage</Link>
-        <Link style={padding} to="/savings">savings</Link>  
-        <Link style={padding} to="/graphs">graphs</Link>
-      </div>
-
       <Routes>
-        <Route path="/savings" element={<Savings />} />
-        <Route path="/graphs" element={<Graphs />} />
-        <Route path="/" element={<Frontpage />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/frontpage" element={<Frontpage />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
-
-      <div>
-        <i>Stay on track with your monthly finances</i>
-      </div>
-      <div>
-      <h1>Event List</h1>
-      <ul>{mappedEvents()}</ul>
-    </div>
     </Router>
   )
 }

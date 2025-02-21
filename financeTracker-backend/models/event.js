@@ -1,10 +1,6 @@
-require('dotenv').config()
-// const config = require('./utils/config')
-const { Sequelize, Model, DataTypes } = require('sequelize')
-const express = require('express')
-const app = express()
+const { Model, DataTypes } = require('sequelize')
+const { sequelize } = require('../utils/db')
 
-const sequelize = new Sequelize(process.env.DATABASE_URL)
 
 class Event extends Model {}
 
