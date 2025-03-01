@@ -1,10 +1,26 @@
 const eventsRouter = require('express').Router()
 const logger = require('../utils/logger')
 const { Event } = require('../models/event')
+const jwt = require('jsonwebtoken')
+const authenticateToken = require('../middleware/auth')
+const { SECRET } = require('../utils/config')
+
+
+// Käytetään autentikointimiddlewarea auth.js
+eventsRouter.get('/', authenticateToken, async (request, response) => {
+  try {
+    console.log("Etsitään eventit..")
+    console.log("request.user:", request.user)
+    const events = await Event.findAll({ where: { user_id: request.user.id } }) 
+    response.json(events)
+  } catch (error) {
+    response.status(500).json({ error: 'Failed to fetch events' })  
+  }
+})
 
 
 
-eventsRouter.get('/', async (req, res) => {
+/*eventsRouter.get('/', async (req, res) => {
   const events = await Event.findAll()
   res.json(events)
 })
@@ -20,6 +36,7 @@ eventsRouter.get('/:id', async (req, res) => {
     res.status(500).json({ error: error.message })
   }
 })
+  
 
 
 eventsRouter.post('/', async (req, res) => {
@@ -81,6 +98,7 @@ eventsRouter.delete('/:id', async (req, res) => {
   }
 })
   
+*/
 
 module.exports = eventsRouter
   

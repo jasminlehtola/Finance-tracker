@@ -2,10 +2,10 @@ POST http://localhost:3001/api/frontpage
 Content-Type: application/json
 
 {
-      "user_id": 1,
+      "user_id": 7,
       "type": "expense",
-      "sum": 150,
-      "category": "Pharmacy",
-      "title": "more medicines",
-      "date": "2025-01-25"
+      "sum": 89,
+      "category": "Clothes",
+      "title": "new shoes",
+      "date": "2025-01-29"
 }

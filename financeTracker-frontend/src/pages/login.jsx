@@ -6,43 +6,92 @@ import loginService from '../services/login'
 import eventService from '../services/events'
 
 
-const Login = ({ setUser }) => {
+const Notification = ({ message, isError }) => {
+  if (!message) return null; // Ei näytetä mitään, jos viestiä ei ole
+
+  return (
+    <div className={isError ? "error" : "success"}>
+      {message}
+    </div>
+  )
+}
+
+
+const Login = ({ user, setUser }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [errorMessage, setErrorMessage] = useState('')
-  const [successMessage, setMessage] = useState('')
   const navigate = useNavigate()
 
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    console.log('logging in with', username)
-  
+    console.log("Lähetetään kirjautumispyyntö...")
+
+    // Tarkastaa, että käyttäjänimi tai salasana eivät ole tyhjiä
+    if (!username.trim() || !password.trim()) {
+      setErrorMessage('Username and password are required')
+
+      setTimeout(() => {
+        console.log("Error message given")
+        setErrorMessage('')
+      }, 5000)
+      return
+    }
+
     try {
       const loginCredentials = { username: username, password: password }
-      const user = await loginService.login(loginCredentials)
-  
-      // Tekee kirjautumisesta "pysyvän" local storagen avulla.
+      const user = await loginService.login(loginCredentials) // Pyytää tokenin backendistä
+      console.log("Saatiin vastaus, login.js valmis:", user)
+
+      /* if (!user || !user.token) {
+        throw new Error("Login failed: No token received")
+      }
+        */
+
+      console.log("Credentialit tehty, kirjautuminen onnistui!")
+
+      // Tallentaa kirjautumistiedot localStorageen
       window.localStorage.setItem(
         'loggedFinanceTrackerUser', JSON.stringify(user)
       )
-  
-      eventService.setToken(user.token)
+      console.log("tiedot localstoragessa", window.localStorage.getItem('loggedFinanceTrackerUser') )
+
       setUser(user)
       setUsername('')
       setPassword('')
-    } catch (exception) {
+      console.log('User logged in:', user)
+      navigate(`/frontpage/${user.id}`)
+    } catch (error) {
+      console.error('Login error:', error)
       setErrorMessage('Wrong username or password')
       setTimeout(() => {
         setErrorMessage('')
       }, 5000)
     }
-    navigate("/frontpage") // Ohjaa käyttäjän etusivulleen
   }
+
+  /*loginService.setToken(user.token) // Asettaa tokenin palvelukutsuihin
+  setUser(user)
+  setUsername('')
+  setPassword('')
+  navigate(`/frontpage/${user.id}`) 
+  console.log('logging in with', username)
+} catch (error) {
+  console.error("Login error:", error)
+  setErrorMessage('Wrong username or password')
+  setTimeout(() => {
+    setErrorMessage('')
+  }, 5000)
+}
+  */
+
+
 
   return (
     <div>
-      < MenuBar />
+      <MenuBar />
+
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div>
@@ -63,6 +112,7 @@ const Login = ({ setUser }) => {
         </div>
         <button type="submit">Login</button>
       </form>
+      <Notification message={errorMessage} isError={true} />
     </div>
   )
 }

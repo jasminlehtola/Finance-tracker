@@ -1,18 +1,29 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { registerUser } from "../services/register"
 import MenuBar from '../components/menubar'
+import axios from 'axios'
 
 
 const Register = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const handleRegister = (event) => {
-    event.preventDefault()
-    console.log("User registered:", username);
-    navigate("/login")
+  const handleRegister = async (event) => {
+    event.preventDefault();
+
+    try {
+      await registerUser({ username, password })
+      alert("Registration successful! You can now log in.")
+      console.log("Käyttäjä luotu!")
+      navigate("/login")
+    } catch (error) {
+      console.error("Registration failed:", error)
+      alert(`Error: ${error.error || "Registration failed. Try again."}`)
+    }
   };
+
 
   return (
     <div>
@@ -23,7 +34,7 @@ const Register = () => {
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <button type="submit">Register</button>
       </form>
-      <button onClick={() => navigate("/")}>Back to Home</button>
+      <button onClick={() => navigate("/home")}>Back to Home</button>
     </div>
   )
 }

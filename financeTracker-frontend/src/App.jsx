@@ -4,6 +4,7 @@ import Login from "./pages/login"
 import Home from "./pages/home"
 import Register from "./pages/register"
 import Frontpage from "./pages/frontpage"
+import "./styles.css"
 
 import {
   BrowserRouter as Router,
@@ -13,23 +14,30 @@ import {
 
 
 const App = () => {
-  const padding = {
-    padding: 15
-  }
-
   const [events, setEvents] = useState([])
-  const [user, setUser] = useState(null); // Tallennetaan käyttäjätiedot
+  const [user, setUser] = useState(null)
 
-  
+  useEffect(() => {
+    // Yritetään lukea käyttäjätiedot localStoragesta
+    const loggedUser = JSON.parse(window.localStorage.getItem('loggedFinanceTrackerUser'))
+    if (loggedUser) {
+      setUser(loggedUser)
+    }
+  }, [])
+
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/frontpage" element={<Frontpage />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </Router>
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/frontpage" element={<Frontpage user={user} events={events} setEvents={setEvents}/>} />
+          <Route path="/frontpage/:id" element={<Frontpage user={user} events={events} setEvents={setEvents}/>} />
+          <Route path="/login" element={<Login user={user} setUser={setUser}/>} />
+        </Routes>
+      </Router>
+    </div>
   )
 }
 
