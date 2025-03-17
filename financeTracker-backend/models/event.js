@@ -14,12 +14,12 @@ Event.init({
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  type: {
+  is_income: {
     type: DataTypes.STRING,
     allowNull: false
   },
   sum: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
     allowNull: false
   },
   category: {

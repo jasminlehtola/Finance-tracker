@@ -39,34 +39,6 @@ const getAll = async () => {
   }
 }
 
-  /*let accessToken = getAccessToken()
-
-  if (!accessToken) {
-    accessToken = await refreshAccessToken()
-  }
-
-  if (!accessToken) {
-    console.log('User is not authenticated')
-    return
-  }
-
-  const token = accessToken
-
-  try {
-    const config = {
-      headers: { Authorization: `Bearer ${token}` }
-    }
-    console.log("Sending token:", token)  
-
-    const response = await axios.get(baseUrl, config)
-    return response.data
-  } catch (error) {
-    console.error('Error fetching events', error)
-    return null
-  }
-}
-  */
-
   
   const create = newObject => {
     return axios.post(baseUrl, newObject)

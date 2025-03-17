@@ -55,7 +55,7 @@ const Login = ({ user, setUser }) => {
       window.localStorage.setItem(
         'loggedFinanceTrackerUser', JSON.stringify(user)
       )
-      console.log("tiedot localstoragessa", window.localStorage.getItem('loggedFinanceTrackerUser') )
+      console.log("Kirjautumistiedot localstoragessa", window.localStorage.getItem('loggedFinanceTrackerUser') )
 
       setUser(user)
       setUsername('')

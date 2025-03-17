@@ -20,6 +20,7 @@ const App = () => {
   useEffect(() => {
     // Yritetään lukea käyttäjätiedot localStoragesta
     const loggedUser = JSON.parse(window.localStorage.getItem('loggedFinanceTrackerUser'))
+    console.log("Localstoragessa tiedot:", loggedUser)
     if (loggedUser) {
       setUser(loggedUser)
     }

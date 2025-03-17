@@ -8,10 +8,14 @@ const { SECRET } = require('../utils/config')
 
 // Käytetään autentikointimiddlewarea auth.js
 eventsRouter.get('/', authenticateToken, async (request, response) => {
+  
+  
   try {
     console.log("Etsitään eventit..")
     console.log("request.user:", request.user)
-    const events = await Event.findAll({ where: { user_id: request.user.id } }) 
+    
+    const events = await Event.findAll({ where: { "user_id": request.user.id } }) 
+    console.log("eventit:", events)
     response.json(events)
   } catch (error) {
     response.status(500).json({ error: 'Failed to fetch events' })  
@@ -34,7 +38,8 @@ eventsRouter.get('/', authenticateToken, async (request, response) => {
 eventsRouter.post('/', authenticateToken, async (request, response)  => {
   try {
     console.log("Postataan tapahtumaa..")
-    console.log("Authorization header:", req.headers.authorization)
+    console.log("Authorization header:", request.headers.authorization)
+    console.log("request body:", request.body)
     const event = await Event.create(request.body)
     console.log("Lisätty tapahtuma:", event)
     return response.json(event)
@@ -47,7 +52,7 @@ eventsRouter.post('/', authenticateToken, async (request, response)  => {
 eventsRouter.put('/:id', async (req, res) => {
   try {
     const { id } = req.params
-    const { type, sum, category, title, date } = req.body
+    const { is_income, sum, category, title, date } = req.body
 
     // Finds event from database
     const event = await Event.findByPk(id)
@@ -58,7 +63,7 @@ eventsRouter.put('/:id', async (req, res) => {
 
     // Updates event with PUT-method (updates only given values)
     await event.update({
-      type,
+      is_income,
       sum,
       category,
       title,
