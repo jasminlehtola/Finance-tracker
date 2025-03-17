@@ -4,14 +4,18 @@ import { useState, useEffect } from 'react'
 import eventService from '../services/events'
 import { getAccessToken, refreshAccessToken } from '../services/auth'
 import MenuBar from '../components/menubar'
+import AddEvent from '../components/addEvent'
+
+import React from 'react'
+import { Modal, Button, Form , Toast, Dropdown, Col, Row} from "react-bootstrap"
 
 
 
-const Frontpage = ({ user, events, setEvents}) => {
+const Frontpage = ({ user, events, setEvents }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
-  
+
 
   const mappedEvents = (events) => {
     if (!events || events.length === 0) {
@@ -48,12 +52,19 @@ const Frontpage = ({ user, events, setEvents}) => {
     fetchEvents()
   }, [])
 
+
+  const [show, setShow] = useState(true)
+  const toggleShow = () => setShow(!show)
+
   return (
-    <div>
+    <div className="container mt-4">
       < MenuBar />
       <h2>Welcome to your dashboard!</h2>
+      <AddEvent />
+  
       <h1>Event List</h1>
       <ul>{mappedEvents(events)}</ul>
+      
     </div>
 
   )

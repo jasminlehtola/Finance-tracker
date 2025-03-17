@@ -24,7 +24,7 @@ const refreshAccessToken = async () => {
     // Päivitetään localStorage uudella accessTokenilla
     user.accessToken = accessToken
     window.localStorage.setItem('loggedFinanceTrackerUser', JSON.stringify(user))
-
+    console.log("Refresh-token päivitetty.")
     return accessToken
   } catch (error) {
     console.error('Error refreshing token', error)

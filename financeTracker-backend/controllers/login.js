@@ -6,11 +6,13 @@ const { SECRET, REFRESH_SECRET  } = require('../utils/config')
 
 const authenticateToken = require('../middleware/auth')
 
+/* 
 // Palauta tapahtumat käyttäjälle
-loginRouter.get('/frontpage', authenticateToken, async (request, response) => {
+loginRouter.get('/', authenticateToken, async (request, response) => {
   const user = request.user  // Käyttäjä, joka saatiin tokenista
   
 })
+  */
 
 
 loginRouter.post('/', async (request, response) => {
@@ -41,10 +43,10 @@ loginRouter.post('/', async (request, response) => {
   }
 
   // Luodaan pääsytunnus (access token)
-  const accessToken = jwt.sign(userForToken, SECRET, { expiresIn: '1h' });
+  const accessToken = jwt.sign(userForToken, SECRET, { expiresIn: '1h' })
 
   // Luodaan uudelleenlataustunnus (refresh token)
-  const refreshToken = jwt.sign(userForToken, SECRET, { expiresIn: '3d' });
+  const refreshToken = jwt.sign(userForToken, SECRET, { expiresIn: '3d' })
 
   console.log("Login successful! Returning token.")
 
@@ -57,21 +59,22 @@ loginRouter.post('/', async (request, response) => {
 
 
 loginRouter.post('/refresh', async (request, response) => {
-  const { refreshToken } = request.body;
+  const { refreshToken } = request.body
 
   if (!refreshToken) {
-    return response.status(401).json({ error: 'Refresh token is required' });
+    return response.status(401).json({ error: 'Refresh token is required' })
   }
 
   // Varmistetaan, että refresh token on validi
   jwt.verify(refreshToken, REFRESH_SECRET, (err, decoded) => {
     if (err) {
-      return response.status(403).json({ error: 'Invalid refresh token' });
+      return response.status(403).json({ error: 'Invalid refresh token' })
     }
 
     // Uusi pääsytunnus
-    const userForToken = { username: decoded.username, id: decoded.id };
-    const newAccessToken = jwt.sign(userForToken, SECRET, { expiresIn: '1h' });
+    const userForToken = { username: decoded.username, id: decoded.id }
+    const newAccessToken = jwt.sign(userForToken, SECRET, { expiresIn: '1h' })
+    console.log("Refresh-token tehty")
 
     response.status(200).json({ accessToken: newAccessToken });
   });

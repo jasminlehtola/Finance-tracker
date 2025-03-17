@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getAccessToken, refreshAccessToken } from './auth'
-const baseUrl = 'http://localhost:3001/api/frontpage'
+const baseUrl = 'http://localhost:3001/api/events'
 
 
 const getAll = async () => {
@@ -30,7 +30,7 @@ const getAll = async () => {
 
   try {
     console.log("Fetching events with config:", config)
-    const response = await axios.get(baseUrl, config)   // tässä menee pieleen!!
+    const response = await axios.get(baseUrl, config)  
     console.log("Haettu data:", response)
     return response.data
   } catch (error) {

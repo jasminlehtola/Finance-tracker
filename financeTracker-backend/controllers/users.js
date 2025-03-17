@@ -27,28 +27,20 @@ userRouter.post('/', async (request, response) => {
     }
 
     const saltRounds = 10
-    const passwordHash = await bcryptjs.hash(password, saltRounds) // encrypts the password
+    const passwordHash = await bcryptjs.hash(password, saltRounds) // salaa salasanan
     console.log("hashed password:", passwordHash)
 
     const user = await User.create({
       username,
-      password: passwordHash // saves the encrypted password
+      password: passwordHash // tallentaa salatun salasanan
     })
     console.log("User found:", user)
-    response.status(201).json(user) // user saved succesfully
+    response.status(201).json(user) 
   } catch (error) {
     response.status(400).json({ error: "expected `username` to be unique" })
   }
 })
 
-/*try {
-    const user = await User.create(req.body)
-    res.json(user)
-  } catch (error) {
-    res.status(400).json({ error: "expected `username` to be unique" })
-  }
-})
-*/
 
 
 module.exports = userRouter

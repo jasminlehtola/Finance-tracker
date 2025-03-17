@@ -18,14 +18,7 @@ eventsRouter.get('/', authenticateToken, async (request, response) => {
   }
 })
 
-
-
-/*eventsRouter.get('/', async (req, res) => {
-  const events = await Event.findAll()
-  res.json(events)
-})
-
-eventsRouter.get('/:id', async (req, res) => {
+/* eventsRouter.get('/:id', async (req, res) => {
   try {
     const event = await Event.findByPk(req.params.id) // Searches single event based on id
     if (!event) {
@@ -35,16 +28,18 @@ eventsRouter.get('/:id', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-})
-  
+}) 
+  */
 
-
-eventsRouter.post('/', async (req, res) => {
+eventsRouter.post('/', authenticateToken, async (request, response)  => {
   try {
-    const event = await Event.create(req.body)
-    return res.json(event)
+    console.log("Postataan tapahtumaa..")
+    console.log("Authorization header:", req.headers.authorization)
+    const event = await Event.create(request.body)
+    console.log("Lisätty tapahtuma:", event)
+    return response.json(event)
   } catch(error) {
-    return res.status(400).json({ error })
+    return response.status(400).json({ error })
   }
 })
 
@@ -78,7 +73,7 @@ eventsRouter.put('/:id', async (req, res) => {
 })
 
 
-eventsRouter.delete('/:id', async (req, res) => {
+/* eventsRouter.delete('/:id', async (req, res) => {
   try {
     const id = req.params.id
     // Finds the event and deletes it from the database
@@ -97,8 +92,9 @@ eventsRouter.delete('/:id', async (req, res) => {
     res.status(500).json({ error: "Internal server error" })
   }
 })
+  */
   
-*/
+
 
 module.exports = eventsRouter
   

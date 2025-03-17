@@ -1,11 +1,12 @@
-POST http://localhost:3001/api/frontpage
+POST http://localhost:3001/api/events
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImthbGxlIiwiaWQiOjcsImlhdCI6MTc0MjIwODIzNiwiZXhwIjoxNzQyMjExODM2fQ.q-NXBeM4iL8iuhWmxM9YDsOx2p8g6Nr7cAsMhmB0dJg
 Content-Type: application/json
 
 {
-      "user_id": 1,
+      "user_id": 7,
       "type": "expense",
-      "sum": 21,
+      "sum": 13.95,
       "category": "Restaurants",
-      "title": "Mcdonalds",
-      "date": "2025-01-30"
+      "title": "Papas pizza",
+      "date": "2025-03-13"
 }

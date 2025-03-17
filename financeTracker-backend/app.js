@@ -11,7 +11,7 @@ const loginRouter = require('./controllers/login')
 
 app.use(cors())
 app.use(express.json())
-app.use('/api/frontpage', eventsRouter)
+app.use('/api/events', eventsRouter)
 app.use('/api/users', userRouter)
 app.use('/api/login', loginRouter)
 
