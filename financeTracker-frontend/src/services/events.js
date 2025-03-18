@@ -3,6 +3,12 @@ import { getAccessToken, refreshAccessToken } from './auth'
 const baseUrl = 'http://localhost:3001/api/events'
 
 
+const logoutUser = () => {
+  window.localStorage.removeItem("loggedFinanceTrackerUser")
+  window.location.reload() // Uudelleenohjataan kirjautumiseen
+}
+
+
 const getAll = async () => {
   const userJSON = window.localStorage.getItem('loggedFinanceTrackerUser')
 
@@ -24,20 +30,32 @@ const getAll = async () => {
   // Haetaan token käyttäjäoliosta
   const token = user.accessToken
 
-  const config = {
-    headers: { Authorization: `Bearer ${token}` }
+  
+  const fetchEvents = async (token) => {
+    try {
+      const config = { headers: { Authorization: `Bearer ${token}` } }
+      console.log("Fetching events with config:", config)
+      const response = await axios.get(baseUrl, config)
+      return response.data
+    } catch (error) {
+      if (error.response?.status === 401) {
+        console.log("Access token expired, trying to refresh...")
+        const newToken = await refreshAccessToken()
+        if (newToken) {
+          return fetchEvents(newToken); // Kokeillaan uudella tokenilla
+        } else {
+          console.error("Token refresh failed, logging out user.")
+          logoutUser()
+        }
+      }
+      throw error
+    }
   }
 
-  try {
-    console.log("Fetching events with config:", config)
-    const response = await axios.get(baseUrl, config)  
-    console.log("Haettu data:", response)
-    return response.data
-  } catch (error) {
-    console.error("Error fetching events", error)
-    throw error
-  }
+  return fetchEvents(token)
 }
+
+
 
   
   const create = newObject => {

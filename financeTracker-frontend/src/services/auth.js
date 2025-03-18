@@ -19,18 +19,19 @@ const refreshAccessToken = async () => {
 
   try {
     const response = await axios.post(baseUrl, { refreshToken })
-    const { accessToken } = response.data
 
     // Päivitetään localStorage uudella accessTokenilla
-    user.accessToken = accessToken
-    window.localStorage.setItem('loggedFinanceTrackerUser', JSON.stringify(user))
-    console.log("Refresh-token päivitetty.")
-    return accessToken
+    if (response.status === 200) {
+      const newAccessToken = response.data.accessToken
+      user.accessToken = newAccessToken
+      window.localStorage.setItem("loggedFinanceTrackerUser", JSON.stringify(user))
+      return newAccessToken
+    }
   } catch (error) {
-    console.error('Error refreshing token', error)
+    console.error("Error refreshing token:", error)
     return null
   }
-};
+}
 
 // Tehdään API-pyyntö pääsytunnuksella (automaattisesti päivittää tokenin, jos se on vanhentunut)
 const fetchData = async (url) => {

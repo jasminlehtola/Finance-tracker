@@ -12,22 +12,30 @@ const AddEvent = () => {
     date: ""
   })
 
-  const [categories, setCategories] = useState(["Bills", "Car", "Food", "Pharmacy", "Restaurants", "Traffic"])
-  const handleClose = () => setShow(false)
+  // Kategoriavaihtoehdot tuloille ja menoille
+  const incomeCategories = ["Benefits", "Gifts", "Pension", "Savings", "Wage", "Other"]
+  const expenseCategories = ["Bills", "Car", "Clothes", "Food", "Fun", "Household supplies", "Housing", "Loan", "Pharmacy", "Phone and internet", "Restaurants and cafes", "Saving", "Shopping", "Other"]
+
+  //const [categories, setCategories] = useState(["Bills", "Car", "Food", "Pharmacy", "Restaurants", "Traffic"])
   const handleShow = () => setShow(true)
+  const handleClose = () => {
+    setShow(false);
+    setFormData({ is_income: null, sum: "", category: "", title: "", date: "" });
+  }
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
-    if (name === "category") {
-      if (value && !categories.includes(value)) {
-        setCategories([...categories, value]) // Lisää uusi kategoria, jos se ei ole listassa
-      }
-    }
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+    //Oman kategorian lisääminen:
+    //if (name === "category") {
+      //if (value && !incomeCategories.includes(value)) {
+        //setCategories([...incomeCategories, value]) // Lisää uusi kategoria, jos se ei ole listassa
+      //}
+    //}
+  }
 
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value
-    })
+  const handleIncomeChange = (value) => {
+    setFormData({ ...formData, is_income: value })
   }
 
   const handleSubmit = async (e) => {
@@ -41,12 +49,12 @@ const AddEvent = () => {
 
     const requestBody = {
       user_id: user.id,
-      is_income: Boolean(formData.is_income), // Pakotetaan booleaniksi
+      is_income: formData.is_income,  // Varmistetaan oikea boolean
       sum: Number(formData.sum), // Muutetaan numeroksi
       category: formData.category,
       title: formData.title,
       date: formData.date
-    };
+    }
 
     try {
     // Lähettää tiedot backendille
@@ -64,8 +72,7 @@ const AddEvent = () => {
 
     if (response.ok) {
       alert("Event added!")
-      handleClose();
-      setFormData({ is_income: "", sum: "", category: "", title: "", date: "" })
+      handleClose()
     } else {
       const errorData = await response.json()
       console.error("Virhe backendista:", errorData);
@@ -96,7 +103,7 @@ return (
               type="radio"
               name="is_income"
               value={formData.is_income}
-              onChange={(val) => setFormData({ ...formData, is_income: val === "true" || val === true })}
+              onChange={handleIncomeChange}
             >
               <ToggleButton id="income" variant="outline-success" value={true}>
                 Income
@@ -112,28 +119,19 @@ return (
             <Form.Control type="number" name="sum" required onChange={handleChange} />
           </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Category</Form.Label>
-            <Form.Control
-              list="category-options"
-              name="category"
-              placeholder="Choose from list or add new"
-              onChange={handleChange}
-            />
-            <datalist id="category-options">  {/* Käyttäjä voi valita tai lisätä uuden */}
-              {categories.map((category, index) => (
-                <option key={index} value={category} />
-              ))}
-            </datalist>
-            <Form.Select name="category" onChange={handleChange}>
-              <option value="Bills">Bills</option>
-              <option value="Car">Car</option>
-              <option value="Food">Food</option>
-              <option value="2">Two</option>
-              <option value="Pharmacy">Pharmacy</option>
-              <option value="Restaurants and cafes">Restaurants and cafes</option>
-            </Form.Select>
-          </Form.Group>
+          
+          {formData.is_income !== null && (
+            <Form.Group className="mb-3">
+              <Form.Label>Category</Form.Label>
+              <Form.Select name="category" onChange={handleChange} required>
+                {(formData.is_income ? incomeCategories : expenseCategories).map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          )}
 
           <Form.Group className="mb-3">
             <Form.Label>Title</Form.Label>

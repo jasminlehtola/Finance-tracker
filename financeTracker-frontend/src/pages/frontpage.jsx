@@ -7,7 +7,7 @@ import MenuBar from '../components/menubar'
 import AddEvent from '../components/addEvent'
 
 import React from 'react'
-import { Modal, Button, Form , Toast, Dropdown, Col, Row} from "react-bootstrap"
+import { Modal, Button, Form, Toast, Dropdown, Col, Row } from "react-bootstrap"
 
 
 
@@ -23,9 +23,10 @@ const Frontpage = ({ user, events, setEvents }) => {
     }
 
     return events.map(event => {
-      if (event.type === "income") {
+      console.log(event)
+      if (event.is_income === true) {
         event.sum = Math.abs(event.sum);  // Pitää huolen, että summa on positiivinen
-      } else {
+      } if (event.is_income === false) {
         event.sum = -Math.abs(event.sum); // Muuttaa summan negatiiviseksi
       }
       return (
@@ -43,14 +44,15 @@ const Frontpage = ({ user, events, setEvents }) => {
   // Etsii kaikki eventit
   useEffect(() => {
     const fetchEvents = async () => {
-      const data = await eventService.getAll()
-      if (data) {
-        setEvents(data)
+      try {
+        const eventsData = await eventService.getAll()
+        setEvents(eventsData);
+      } catch (error) {
+        console.error("Failed to fetch events:", error)
       }
     }
-
     fetchEvents()
-  }, [])
+  }, [setEvents])
 
 
   const [show, setShow] = useState(true)
@@ -59,12 +61,12 @@ const Frontpage = ({ user, events, setEvents }) => {
   return (
     <div className="container mt-4">
       < MenuBar />
-      <h2>Welcome to your dashboard!</h2>
+      <h2>Welcome to your dashboard {user?.username}!</h2>
       <AddEvent />
-  
+
       <h1>Event List</h1>
       <ul>{mappedEvents(events)}</ul>
-      
+
     </div>
 
   )
