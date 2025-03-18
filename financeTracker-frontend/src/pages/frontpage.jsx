@@ -1,13 +1,12 @@
 
 import { useNavigate, useParams } from "react-router-dom"
 import { useState, useEffect } from 'react'
+import React from 'react'
 import eventService from '../services/events'
 import { getAccessToken, refreshAccessToken } from '../services/auth'
 import MenuBar from '../components/menubar'
 import AddEvent from '../components/addEvent'
-
-import React from 'react'
-import { Modal, Button, Form, Toast, Dropdown, Col, Row } from "react-bootstrap"
+import DeleteEvent from '../components/deleteEvent'
 
 
 
@@ -15,31 +14,10 @@ const Frontpage = ({ user, events, setEvents }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
-
-
-  const mappedEvents = (events) => {
-    if (!events || events.length === 0) {
-      return <li>No events found.</li>
-    }
-
-    return events.map(event => {
-      console.log(event)
-      if (event.is_income === true) {
-        event.sum = Math.abs(event.sum);  // Pitää huolen, että summa on positiivinen
-      } if (event.is_income === false) {
-        event.sum = -Math.abs(event.sum); // Muuttaa summan negatiiviseksi
-      }
-      return (
-        <li key={event.id}>
-          {event.sum}€ - category: {event.category} - description: {event.title} - date: {event.date}
-        </li>
-      )
-    })
-  }
-
-  const { id } = useParams()  // Haetaan käyttäjän ID URL:sta
-  console.log("Käyttäjän ID:", id)
-
+  const [editEvent, setEditEvent] = useState(null)
+  const [showEditForm, setShowEditForm] = useState(false)
+  const [show, setShow] = useState(true)
+  const toggleShow = () => setShow(!show)
 
   // Etsii kaikki eventit
   useEffect(() => {
@@ -55,8 +33,34 @@ const Frontpage = ({ user, events, setEvents }) => {
   }, [setEvents])
 
 
-  const [show, setShow] = useState(true)
-  const toggleShow = () => setShow(!show)
+
+  const mappedEvents = (events) => {
+    if (!events || events.length === 0) {
+      return <li>No events found.</li>
+    }
+
+
+    return events.map(event => {
+      // Varmistetaan, että event.id on olemassa
+      if (!event.id) {
+        console.error("Event id is missing:", event);
+        return null;
+      }
+      if (event.is_income === true) {
+        event.sum = Math.abs(event.sum) // Pitää huolen, että summa on positiivinen
+      } if (event.is_income === false) {
+        event.sum = -Math.abs(event.sum) // Muuttaa summan negatiiviseksi
+      }
+      return (
+        <li key={event.id}>
+          {event.sum}€ - category: {event.category} - description: {event.title} - date: {event.date}
+          <DeleteEvent eventId={event.id} setEvents={setEvents} events={events} />
+        </li>
+      )
+    })
+  }
+
+
 
   return (
     <div className="container mt-4">

@@ -15,7 +15,7 @@ Event.init({
     allowNull: false
   },
   is_income: {
-    type: DataTypes.STRING,
+    type: DataTypes.BOOLEAN,
     allowNull: false
   },
   sum: {

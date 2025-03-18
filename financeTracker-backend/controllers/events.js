@@ -8,34 +8,20 @@ const { SECRET } = require('../utils/config')
 
 // Käytetään autentikointimiddlewarea auth.js
 eventsRouter.get('/', authenticateToken, async (request, response) => {
-  
-  
+
   try {
     console.log("Etsitään eventit..")
     console.log("request.user:", request.user)
-    
-    const events = await Event.findAll({ where: { "user_id": request.user.id } }) 
+
+    const events = await Event.findAll({ where: { "user_id": request.user.id } })
     console.log("eventit:", events)
     response.json(events)
   } catch (error) {
-    response.status(500).json({ error: 'Failed to fetch events' })  
+    response.status(500).json({ error: 'Failed to fetch events' })
   }
 })
 
-/* eventsRouter.get('/:id', async (req, res) => {
-  try {
-    const event = await Event.findByPk(req.params.id) // Searches single event based on id
-    if (!event) {
-      return res.status(404).json({ error: "Event not found" })
-    }
-    res.json(event)
-  } catch (error) {
-    res.status(500).json({ error: error.message })
-  }
-}) 
-  */
-
-eventsRouter.post('/', authenticateToken, async (request, response)  => {
+eventsRouter.post('/', authenticateToken, async (request, response) => {
   try {
     console.log("Postataan tapahtumaa..")
     console.log("Authorization header:", request.headers.authorization)
@@ -43,7 +29,7 @@ eventsRouter.post('/', authenticateToken, async (request, response)  => {
     const event = await Event.create(request.body)
     console.log("Lisätty tapahtuma:", event)
     return response.json(event)
-  } catch(error) {
+  } catch (error) {
     return response.status(400).json({ error })
   }
 })
@@ -54,14 +40,13 @@ eventsRouter.put('/:id', async (req, res) => {
     const { id } = req.params
     const { is_income, sum, category, title, date } = req.body
 
-    // Finds event from database
+    // Etsii eventin tietokannasta
     const event = await Event.findByPk(id)
 
     if (!event) {
       return res.status(404).json({ error: "Event not found" })
     }
 
-    // Updates event with PUT-method (updates only given values)
     await event.update({
       is_income,
       sum,
@@ -70,7 +55,7 @@ eventsRouter.put('/:id', async (req, res) => {
       date
     })
 
-    res.json(event) // Returns updated event
+    res.json(event)
   } catch (error) {
     console.error("Error updating event:", error)
     res.status(500).json({ error: "Internal server error" })
@@ -78,29 +63,27 @@ eventsRouter.put('/:id', async (req, res) => {
 })
 
 
-/* eventsRouter.delete('/:id', async (req, res) => {
+eventsRouter.delete('/:id', async (request, response) => {
   try {
-    const id = req.params.id
-    // Finds the event and deletes it from the database
-    const deletedEvent = await Event.destroy({
-      where: { id: id }
-    });
+    const eventId = request.params.id
+    // Etsii eventin tietokannasta ja poistaa sen
+    const deletedEvent = await Event.destroy({where: { id: eventId }})
 
-    if (!deletedEvent) {
-      return res.status(404).json({ error: "Event not found" })
+    if (deletedEvent) {
+      logger.info("Deleted event number", eventId)
+      response.status(200).json({ message: 'Event deleted successfully.' })
+    } else {
+      response.status(404).json({ message: 'Event not found.' })
     }
 
-    logger.info("Deleted event number", id)
-    res.status(204).end()
   } catch (error) {
     console.error("Error deleting event:", error)
-    res.status(500).json({ error: "Internal server error" })
+    response.status(500).json({ error: "Internal server error" })
   }
 })
-  */
-  
+
+
 
 
 module.exports = eventsRouter
-  
- 
+

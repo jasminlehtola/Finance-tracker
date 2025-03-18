@@ -116,7 +116,7 @@ return (
 
           <Form.Group className="mb-3">
             <Form.Label>Sum</Form.Label>
-            <Form.Control type="number" name="sum" required onChange={handleChange} />
+            <Form.Control type="currency" name="sum" required onChange={handleChange} />
           </Form.Group>
 
           

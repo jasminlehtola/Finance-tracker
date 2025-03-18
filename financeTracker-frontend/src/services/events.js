@@ -55,11 +55,12 @@ const getAll = async () => {
   return fetchEvents(token)
 }
 
-
-
-  
   const create = newObject => {
     return axios.post(baseUrl, newObject)
+  }
+
+  const remove = eventId => {
+    return axios.delete(baseUrl, eventId)
   }
   
   const update = (id, newObject) => {
@@ -69,5 +70,6 @@ const getAll = async () => {
   export default { 
     getAll: getAll, 
     create: create, 
+    remove: remove,
     update: update 
   }

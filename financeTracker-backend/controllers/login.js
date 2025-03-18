@@ -10,7 +10,6 @@ const authenticateToken = require('../middleware/auth')
 // Palauta tapahtumat käyttäjälle
 loginRouter.get('/', authenticateToken, async (request, response) => {
   const user = request.user  // Käyttäjä, joka saatiin tokenista
-  
 })
   */
 
