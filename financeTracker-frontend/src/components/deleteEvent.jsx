@@ -20,11 +20,9 @@ const DeleteEvent = ({ eventId, setEvents, events }) => {
             console.log(response)
 
             if (response.ok) {
-                alert("Event deleted successfully!")
-
                 // Päivitetään tapahtumat, jotta poistetut tapahtumat eivät enää näy
-                const updatedEvents = events.filter((event) => event.id !== eventId)
-                setEvents(updatedEvents)
+                setEvents(events.filter(event => event.id !== eventId));
+                alert("Event deleted successfully!")
             } else {
                 alert("Failed to delete event.")
             }
@@ -35,11 +33,11 @@ const DeleteEvent = ({ eventId, setEvents, events }) => {
     }
 
     return (
-        <Button
+        <button
             onClick={() => handleDeleteEvent(eventId)}
             style={{ marginLeft: "10px", color: "red", border: "none", background: "transparent" }} >
             X
-        </Button>
+        </button>
     )
 }
 

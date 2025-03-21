@@ -11,11 +11,7 @@ import DeleteEvent from '../components/deleteEvent'
 
 
 const Frontpage = ({ user, events, setEvents }) => {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
   const navigate = useNavigate()
-  const [editEvent, setEditEvent] = useState(null)
-  const [showEditForm, setShowEditForm] = useState(false)
   const [show, setShow] = useState(true)
   const toggleShow = () => setShow(!show)
 
@@ -31,33 +27,81 @@ const Frontpage = ({ user, events, setEvents }) => {
     }
     fetchEvents()
   }, [setEvents])
+  console.log("alkuperäiset eventit:", events)
+
+
+  // Laskee kokonaistulot
+  const totalIncome = events
+    .filter(event => event.is_income === true) // Suodatetaan vain income-tapahtumat
+    .reduce((sum, event) => sum + Math.abs(event.sum), 0) // Lasketaan yhteen absoluuttiset summat
+
+  // Laskee kokonaismenot
+  const totalExpenses = events
+    .filter(event => event.is_income === false) // Suodatetaan vain expense-tapahtumat
+    .reduce((sum, event) => sum + Math.abs(event.sum), 0)
+
+  // Laskee tulot-menot
+  const balance = Math.round((totalIncome - totalExpenses) * 100) / 100
 
 
 
   const mappedEvents = (events) => {
     if (!events || events.length === 0) {
-      return <li>No events found.</li>
+      return <p>No events found.</p>
     }
 
+    return (
+      <div>
+        <div className="event-container">
 
-    return events.map(event => {
-      // Varmistetaan, että event.id on olemassa
-      if (!event.id) {
-        console.error("Event id is missing:", event);
-        return null;
-      }
-      if (event.is_income === true) {
-        event.sum = Math.abs(event.sum) // Pitää huolen, että summa on positiivinen
-      } if (event.is_income === false) {
-        event.sum = -Math.abs(event.sum) // Muuttaa summan negatiiviseksi
-      }
-      return (
-        <li key={event.id}>
-          {event.sum}€ - category: {event.category} - description: {event.title} - date: {event.date}
-          <DeleteEvent eventId={event.id} setEvents={setEvents} events={events} />
-        </li>
-      )
-    })
+          <div className="event-header">
+            <span>Sum</span>
+            <span>Category</span>
+            <span>Description</span>
+            <span>Date</span>
+          </div>
+
+          <div className="event-container">
+            {events.map(event => {
+              // Varmistetaan, että event.id on olemassa
+              if (!event.id) {
+                console.error("Event id is missing:", event);
+                return null;
+              }
+              if (event.is_income === true) {
+                event.sum = Math.abs(event.sum) // Pitää huolen, että summa on positiivinen
+              } if (event.is_income === false) {
+                event.sum = -Math.abs(event.sum) // Muuttaa summan negatiiviseksi
+              }
+              return (
+                <li key={event.id} className="event-item">
+                  <div className="event-data">{event.sum}€</div>
+                  <div className="event-data">{event.category}</div>
+                  <div className="event-data">{event.title}</div>
+                  <div className="event-data">{event.date}</div>
+                  <div>
+                    <DeleteEvent eventId={event.id} setEvents={setEvents} events={events} />
+                  </div>
+                </li>
+              )
+            })}
+          </div>
+        </div>
+
+        <div className="summary-container">
+          <div className="summary-item title">Incomes:</div>
+          <div className="summary-item value">{totalIncome} €</div>
+
+          <div className="summary-item title">Expenses:</div>
+          <div className="summary-item value">{totalExpenses} €</div>
+
+          <div className="summary-item title">Balance:</div>
+          <div className="summary-item value">{balance} €</div>
+        </div>
+      </div>
+
+
+    )
   }
 
 
@@ -65,10 +109,10 @@ const Frontpage = ({ user, events, setEvents }) => {
   return (
     <div className="container mt-4">
       < MenuBar />
-      <h2>Welcome to your dashboard {user?.username}!</h2>
-      <AddEvent />
+      <h3>Welcome to your dashboard {user?.username}!</h3>
+      <AddEvent events={events} setEvents={setEvents}/>
 
-      <h1>Event List</h1>
+      <h2>Event List</h2>
       <ul>{mappedEvents(events)}</ul>
 
     </div>

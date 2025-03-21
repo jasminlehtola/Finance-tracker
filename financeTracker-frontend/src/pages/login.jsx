@@ -90,8 +90,6 @@ const Login = ({ user, setUser }) => {
 
   return (
     <div>
-      <MenuBar />
-
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div>
