@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Frontpage from "./frontpage"
-import MenuBar from '../components/menubar'
+import NavBar from '../components/navbar'
 import loginService from '../services/login'
 import eventService from '../services/events'
 

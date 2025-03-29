@@ -1,9 +1,7 @@
 const eventsRouter = require('express').Router()
 const logger = require('../utils/logger')
 const { Event } = require('../models/event')
-const jwt = require('jsonwebtoken')
 const authenticateToken = require('../middleware/auth')
-const { SECRET } = require('../utils/config')
 
 
 // Käytetään autentikointimiddlewarea auth.js

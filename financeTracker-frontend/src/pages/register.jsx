@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { registerUser } from "../services/register"
-import MenuBar from '../components/menubar'
+import NavBar from '../components/navbar'
 import axios from 'axios'
 
 
@@ -27,7 +27,7 @@ const Register = () => {
 
   return (
     <div>
-    < MenuBar />
+    < NavBar />
       <h2>Create an Account</h2>
       <form onSubmit={handleRegister}>
         <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />

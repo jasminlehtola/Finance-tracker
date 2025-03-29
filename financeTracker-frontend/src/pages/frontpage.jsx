@@ -3,10 +3,11 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useState, useEffect } from 'react'
 import React from 'react'
 import eventService from '../services/events'
-import { getAccessToken, refreshAccessToken } from '../services/auth'
-import MenuBar from '../components/menubar'
+//import { getAccessToken, refreshAccessToken } from '../services/auth'
+import NavBar from '../components/navbar'
 import AddEvent from '../components/addEvent'
 import DeleteEvent from '../components/deleteEvent'
+import SummaryBox from "../components/summary"
 
 
 
@@ -20,14 +21,13 @@ const Frontpage = ({ user, events, setEvents }) => {
     const fetchEvents = async () => {
       try {
         const eventsData = await eventService.getAll()
-        setEvents(eventsData);
+        setEvents(eventsData)
       } catch (error) {
         console.error("Failed to fetch events:", error)
       }
     }
     fetchEvents()
   }, [setEvents])
-  console.log("alkuperäiset eventit:", events)
 
 
   // Laskee kokonaistulot
@@ -62,42 +62,37 @@ const Frontpage = ({ user, events, setEvents }) => {
           </div>
 
           <div className="event-container">
-            {events.map(event => {
-              // Varmistetaan, että event.id on olemassa
-              if (!event.id) {
-                console.error("Event id is missing:", event);
-                return null;
-              }
-              if (event.is_income === true) {
-                event.sum = Math.abs(event.sum) // Pitää huolen, että summa on positiivinen
-              } if (event.is_income === false) {
-                event.sum = -Math.abs(event.sum) // Muuttaa summan negatiiviseksi
-              }
-              return (
-                <li key={event.id} className="event-item">
-                  <div className="event-data">{event.sum}€</div>
-                  <div className="event-data">{event.category}</div>
-                  <div className="event-data">{event.title}</div>
-                  <div className="event-data">{event.date}</div>
-                  <div>
-                    <DeleteEvent eventId={event.id} setEvents={setEvents} events={events} />
-                  </div>
-                </li>
-              )
-            })}
+            {events
+              .slice() // Luodaan kopio, jotta alkuperäinen data ei muutu
+              .sort((a, b) => new Date(b.date) - new Date(a.date)) // Järjestetään aikajärjestykseen
+              .map(event => {
+                // Varmistetaan, että event.id on olemassa
+                if (!event.id) {
+                  console.error("Event id is missing:", event)
+                  return null
+                }
+                if (event.is_income === true) {
+                  event.sum = Math.abs(event.sum) // Pitää huolen, että summa on positiivinen
+                } if (event.is_income === false) {
+                  event.sum = -Math.abs(event.sum) // Muuttaa summan negatiiviseksi
+                }
+
+                return (
+                  <li key={event.id} className="event-item">
+                    <div className="event-data">{event.sum}€</div>
+                    <div className="event-data">{event.category}</div>
+                    <div className="event-data">{event.title}</div>
+                    <div className="event-data">{event.date}</div>
+                    <div>
+                      <DeleteEvent eventId={event.id} setEvents={setEvents} events={events} />
+                    </div>
+                  </li>
+                )
+              })
+            }
           </div>
         </div>
 
-        <div className="summary-container">
-          <div className="summary-item title">Incomes:</div>
-          <div className="summary-item value">{totalIncome} €</div>
-
-          <div className="summary-item title">Expenses:</div>
-          <div className="summary-item value">{totalExpenses} €</div>
-
-          <div className="summary-item title">Balance:</div>
-          <div className="summary-item value">{balance} €</div>
-        </div>
       </div>
 
 
@@ -108,12 +103,13 @@ const Frontpage = ({ user, events, setEvents }) => {
 
   return (
     <div className="container mt-4">
-      < MenuBar />
+      < NavBar />
       <h3>Welcome to your dashboard {user?.username}!</h3>
-      <AddEvent events={events} setEvents={setEvents}/>
+      <SummaryBox events={events} />
+      <AddEvent events={events} setEvents={setEvents} />
 
       <h2>Event List</h2>
-      <ul>{mappedEvents(events)}</ul>
+      <div>{mappedEvents(events)}</div>
 
     </div>
 

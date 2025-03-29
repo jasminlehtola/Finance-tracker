@@ -45,7 +45,7 @@ loginRouter.post('/', async (request, response) => {
   const accessToken = jwt.sign(userForToken, SECRET, { expiresIn: '1h' })
 
   // Luodaan uudelleenlataustunnus (refresh token)
-  const refreshToken = jwt.sign(userForToken, SECRET, { expiresIn: '3d' })
+  const refreshToken = jwt.sign(userForToken, SECRET, { expiresIn: '1d' })
 
   console.log("Login successful! Returning token.")
 
@@ -64,19 +64,19 @@ loginRouter.post('/refresh', async (request, response) => {
     return response.status(401).json({ error: 'Refresh token is required' })
   }
 
-  // Varmistetaan, että refresh token on validi
-  jwt.verify(refreshToken, REFRESH_SECRET, (err, decoded) => {
-    if (err) {
-      return response.status(403).json({ error: 'Invalid refresh token' })
-    }
+  try {
+  // Tarkistetaan, onko refresh token validi ja ei ole vanhentunut
+  const decoded = jwt.verify(refreshToken, REFRESH_SECRET)
+    
+  // Luodaan uusi access token
+  const newAccessToken = jwt.sign({ userId: decoded.userId }, SECRET, { expiresIn: '1h' })
 
-    // Uusi pääsytunnus
-    const userForToken = { username: decoded.username, id: decoded.id }
-    const newAccessToken = jwt.sign(userForToken, SECRET, { expiresIn: '1h' })
-    console.log("Refresh-token tehty")
+  return response.json({ accessToken: newAccessToken })
+  } catch (error) {
+    console.error("Refresh token error:", error)
+    return response.sendStatus(403) 
+  }
+  })
 
-    response.status(200).json({ accessToken: newAccessToken });
-  });
-});
 
 module.exports = loginRouter

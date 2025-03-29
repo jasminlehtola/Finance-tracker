@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Modal, Button, Form, ToggleButton, ToggleButtonGroup, Toast, Dropdown, Col, Row } from "react-bootstrap"
 
 
-const AddEvent = ({events, setEvents}) => {
+const AddEvent = ({ events, setEvents }) => {
   const [show, setShow] = useState(false)
   const [formData, setFormData] = useState({
     is_income: "",
@@ -51,8 +51,8 @@ const AddEvent = ({events, setEvents}) => {
 
     const requestBody = {
       user_id: user.id,
-      is_income: formData.is_income, 
-      sum: Number(formData.sum), 
+      is_income: formData.is_income,
+      sum: Number(formData.sum),
       category: formData.category,
       title: formData.title,
       date: formData.date
@@ -74,7 +74,6 @@ const AddEvent = ({events, setEvents}) => {
       console.log("response:", response)
 
       if (response.ok) {
-        console.log("eventit:", events)
         const newEvent = await response.json();
         // Päivitetään tila, jotta uusi tapahtuma ilmestyy heti listaan
         setEvents([...events, newEvent]);
@@ -141,13 +140,20 @@ const AddEvent = ({events, setEvents}) => {
             )}
 
             <Form.Group className="mb-3">
-              <Form.Label>Title ({55 - formData.title.length} characters left)</Form.Label>
+              <Form.Label>Title </Form.Label>
               <Form.Control
                 type="text"
                 name="title"
                 maxLength="55"  // Estää yli 55 merkin syötön
                 onChange={handleChange}
               />
+              <small
+                style={{
+                  color: formData.title.length > 45 ? 'red' : 'gray', // Punainen, jos jäljellä olevia merkkejä on alle 10
+                }}
+              >
+                {55 - formData.title.length} characters left
+              </small>
             </Form.Group>
 
             <Form.Group className="mb-3">

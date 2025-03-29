@@ -1,17 +1,11 @@
 import React from 'react'
-import { Link } from "react-router-dom"
 import { useNavigate } from 'react-router-dom'
-import { Button, Navbar } from "react-bootstrap"
 
-const padding = {
-  padding: 10
-}
 
 const LogoutButton = () => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    // Removes user info from localStorage
     window.localStorage.removeItem('loggedFinanceTrackerUser')
     navigate('/home')
   }
@@ -21,7 +15,7 @@ const LogoutButton = () => {
   )
 }
 
-const MenuBar = () => {
+const NavBar = () => {
   return (
     <div>
       <nav class="navbar navbar-expand-lg custom-navbar">
@@ -31,9 +25,9 @@ const MenuBar = () => {
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="/frontpage">Frontpage</a>
-              <a class="nav-link" href="#">Saving</a>
-              <a class="nav-link" href="/graphs">Graphs</a>
+              <a class="nav-link active custom-navbar" aria-current="page" href="/frontpage">Frontpage</a>
+              <a class="nav-link custom-navbar" href="#">Savings</a>
+              <a class="nav-link custom-navbar" href="/graphs">Graphs</a>
               
             <LogoutButton />
         
@@ -46,4 +40,4 @@ const MenuBar = () => {
   )
 }
 
-export default MenuBar
+export default NavBar

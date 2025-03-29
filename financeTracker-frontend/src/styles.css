@@ -5,9 +5,11 @@
   margin: 10px 0;
 }
 
+/* Navigointivalikko */
 .custom-navbar {
   color: white !important;
   background-color: #156082 !important;
+  margin: 0px 25px 0px 0px;
 }
 
 /* Napit */
@@ -32,55 +34,87 @@
   background-color: #ebeff3;  
   padding: 10px;
   border-radius: 1px;
-}
-
-.event-header, .event-item {
-  display: grid;
-  grid-template-columns: 1fr 1.7fr 3.5fr 1.3fr 1fr; /* Sarakkeiden leveys */
-  gap: 0px;
-  padding: 15px;
-  text-align: left;
+  margin-bottom: 10px;
 }
 
 /* Otsikkorivi */
 .event-header {
+  display: grid;
   font-weight: bold;
+  grid-template-columns: 1fr 1.7fr 3.5fr 1.3fr 1fr; /* Sarakkeiden leveys */
+  gap: 0px;
+  padding: 10px;
+  text-align: left;
 }
 
 /* Yksittäinen tapahtumarivi taulukossa*/
 .event-item {
+  display: grid;
   background-color: white;
-  padding: 3.5px;
+  grid-template-columns: 1fr 1.7fr 3.5fr 1.3fr 1fr; /* Sarakkeiden leveys */
+  gap: 0px;
+  padding: 1.5px;
   margin-top: 5px;
+  text-align: left;
   list-style-type: none;  /* Poistaa luettelopallon */
 }
 
 .event-data {
-  padding: 3px;
+  padding: 2px;
   text-align: left;
 }
 
 /* Summa-taulukko */
+/*
 .summary-container {
   display: grid;
   grid-template-columns: 1fr 8fr ; 
-  gap: 10px; /* Vähän tilaa solujen väliin */
+  gap: 10px; 
   background-color: #ebeff3; 
   padding: 15px;
+  list-style-type: none;
 }
 
 .summary-item {
-  padding: 0px;
+  display: grid;
+  grid-template-columns: 1fr 1.7fr 3.5fr 1.3fr 1fr; 
+  gap: 0px;
+  padding: 1.5px;
+  margin-top: 5px;
+  text-align: right;
+  list-style-type: none;
 }
 
 .title {
   font-weight: bold;
-  text-align: left;
+  text-align: right;
 }
 
 .value {
   text-align: left;
   color: black; 
+}
+*/
+
+/* Kuukauden summary-taulukko */
+.summary-box {
+  background-color: #f1f4f7;
+  padding: 10px;
+  border-radius: 1px;
+  margin: 0px;
+  
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.7fr 2.7fr;
+  align-items: start;
+}
+
+.summary-labels p,
+.summary-values p,
+.category-summary p {
+  margin: 0.2rem 0;
 }
 
 /*
