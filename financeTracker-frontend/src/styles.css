@@ -5,14 +5,23 @@
   margin: 10px 0;
 }
 
-/* Navigointivalikko */
+
+/* ---Navigointivalikko--- */
 .custom-navbar {
   color: white !important;
-  background-color: #156082 !important;
-  margin: 0px 25px 0px 0px;
+  background-color: #156082;
+  padding: 10px;
+  margin: 0px 30px 0px 0px;
 }
 
-/* Napit */
+.navbar-container {
+  background-color: #156082;
+  padding: 0px;
+  margin: 0px 0px 20px 0px;
+}
+
+
+/* ---Napit--- */
 .custom-button {
   color: white !important;
   background-color: #156082 !important;
@@ -21,88 +30,37 @@
   border: none;
 }
 
-/* LogOut-nappi */
 .custom-logoutButton {
   color: black !important;
   background-color: #ebeff3 !important;
-  padding: 8px !important;
   border: none;
 }
 
-/* Taulukon tausta */
-.event-container {
-  background-color: #ebeff3;  
+.custom-deleteButton {
+  margin-left: "10px";
+  color: #156082 !important;
+  border: "none" !important;
+  outline: none;
+  background: "none" !important;
+  font-size: 10rem;
+  padding: 0;
+}
+
+
+/* ---Koko sivun tausta--- */
+.page-container {
+  background-color: #ffffff;
   padding: 10px;
-  border-radius: 1px;
-  margin-bottom: 10px;
+  margin: 15px 45px 25px 25px;
 }
 
-/* Otsikkorivi */
-.event-header {
-  display: grid;
-  font-weight: bold;
-  grid-template-columns: 1fr 1.7fr 3.5fr 1.3fr 1fr; /* Sarakkeiden leveys */
-  gap: 0px;
-  padding: 10px;
-  text-align: left;
-}
 
-/* Yksittäinen tapahtumarivi taulukossa*/
-.event-item {
-  display: grid;
-  background-color: white;
-  grid-template-columns: 1fr 1.7fr 3.5fr 1.3fr 1fr; /* Sarakkeiden leveys */
-  gap: 0px;
-  padding: 1.5px;
-  margin-top: 5px;
-  text-align: left;
-  list-style-type: none;  /* Poistaa luettelopallon */
-}
-
-.event-data {
-  padding: 2px;
-  text-align: left;
-}
-
-/* Summa-taulukko */
-/*
-.summary-container {
-  display: grid;
-  grid-template-columns: 1fr 8fr ; 
-  gap: 10px; 
-  background-color: #ebeff3; 
-  padding: 15px;
-  list-style-type: none;
-}
-
-.summary-item {
-  display: grid;
-  grid-template-columns: 1fr 1.7fr 3.5fr 1.3fr 1fr; 
-  gap: 0px;
-  padding: 1.5px;
-  margin-top: 5px;
-  text-align: right;
-  list-style-type: none;
-}
-
-.title {
-  font-weight: bold;
-  text-align: right;
-}
-
-.value {
-  text-align: left;
-  color: black; 
-}
-*/
-
-/* Kuukauden summary-taulukko */
+/* ---Kuukauden summary-taulukko--- */
 .summary-box {
   background-color: #f1f4f7;
   padding: 10px;
   border-radius: 1px;
-  margin: 0px;
-  
+
 }
 
 .summary-grid {
@@ -117,14 +75,44 @@
   margin: 0.2rem 0;
 }
 
-/*
-.event-item {
-  background-color: white; 
+
+/* ---Events-taulukon tausta--- */
+.event-container {
+  background-color: #ebeff3;
+  padding: 10px;
+  border-radius: 1px;
+}
+
+/* Otsikkorivi */
+.event-header {
   display: grid;
-  grid-template-columns: 1fr 2fr 3fr 2fr; 
-  gap: 10px;
+  font-weight: bold;
+  grid-template-columns: 1fr 1.7fr 3.5fr 1.3fr 1fr;
+  gap: 0px;
+  padding: 10px;
+  text-align: left;
+}
+
+/* Yksittäinen tapahtumarivi taulukossa*/
+.event-item {
+  display: grid;
+  background-color: white;
+  grid-template-columns: 1fr 1.7fr 3.5fr 1.3fr 1fr;
+  padding: 1.5px;
+  margin-top: 5px;
+  text-align: left;
+  list-style-type: none;
+}
+
+.event-data {
   padding: 2px;
   text-align: left;
-  list-style: none;
 }
-*/
+
+
+/* ---Savings-sivu--- */
+.savings-container {
+  background-color: #ebeff3;
+  padding: 10px;
+  border-radius: 1px;
+}

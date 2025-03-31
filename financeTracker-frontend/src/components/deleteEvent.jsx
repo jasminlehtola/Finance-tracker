@@ -35,7 +35,8 @@ const DeleteEvent = ({ eventId, setEvents, events }) => {
     return (
         <button
             onClick={() => handleDeleteEvent(eventId)}
-            style={{ marginLeft: "10px", color: "red", border: "none", background: "transparent" }} >
+            classname="custom-deleteButton"
+        >
             X
         </button>
     )

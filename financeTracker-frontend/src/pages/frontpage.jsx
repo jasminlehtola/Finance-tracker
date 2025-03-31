@@ -12,9 +12,7 @@ import SummaryBox from "../components/summary"
 
 
 const Frontpage = ({ user, events, setEvents }) => {
-  const navigate = useNavigate()
   const [show, setShow] = useState(true)
-  const toggleShow = () => setShow(!show)
 
   // Etsii kaikki eventit
   useEffect(() => {
@@ -102,14 +100,16 @@ const Frontpage = ({ user, events, setEvents }) => {
 
 
   return (
-    <div className="container mt-4">
+    <div>
       < NavBar />
-      <h3>Welcome to your dashboard {user?.username}!</h3>
-      <SummaryBox events={events} />
-      <AddEvent events={events} setEvents={setEvents} />
+      <div className="page-container">
+        <h3>Welcome to your dashboard {user?.username}!</h3>
+        <SummaryBox events={events} />
+        <AddEvent events={events} setEvents={setEvents} />
 
-      <h2>Event List</h2>
-      <div>{mappedEvents(events)}</div>
+        <h2>Event List</h2>
+        <div>{mappedEvents(events)}</div>
+      </div>
 
     </div>
 
