@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div>
       <h1>Welcome to the Finance App</h1>
-      <p>Manage your income and expenses easily!</p>
+      <p>Manage your incomes and expenses easily!</p>
       <button onClick={() => navigate("/login")}>Login</button>
       <button onClick={() => navigate("/register")}>Register</button>
     </div>
