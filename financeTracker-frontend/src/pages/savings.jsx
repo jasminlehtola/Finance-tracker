@@ -1,8 +1,14 @@
 import { useState, useEffect, useMemo } from 'react'
 import NavBar from '../components/navbar'
 import eventService from '../services/events'
+import MonthMenu from '../components/monthMenu'
+
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
 
 const Savings = ({ events, setEvents }) => {
+    const [selectedMonth, setSelectedMonth] = useState("")
+    const [selectedYear, setSelectedYear] = useState("")
 
     // Etsii kaikki eventit
     useEffect(() => {
@@ -19,19 +25,6 @@ const Savings = ({ events, setEvents }) => {
 
     console.log("Kaikki tapahtumat:", events)
 
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    const [selectedMonth, setSelectedMonth] = useState("")
-    const [selectedYear, setSelectedYear] = useState("")
-
-    const handleMonthChange = (e) => setSelectedMonth(e.target.value)
-    const handleYearChange = (e) => setSelectedYear(e.target.value)
-
-
-    // Luodaan lista vuosista datan perusteella
-    const availableYears = useMemo(() => {
-        const years = events.map(event => new Date(event.date).getFullYear())
-        return [...new Set(years)].sort((a, b) => b - a)
-    }, [events])
 
     // Suodatetaan savings-kategoriaan kuuluvat menot
     const filteredSavings = events.filter(event => {
@@ -47,10 +40,7 @@ const Savings = ({ events, setEvents }) => {
         )
     })
 
-
     const totalSavings = filteredSavings.reduce((sum, event) => sum + Math.abs(event.sum), 0)
-
-
 
 
     return (
@@ -60,37 +50,27 @@ const Savings = ({ events, setEvents }) => {
                 <h3>Savings</h3>
 
                 <div className="savings-container">
-                    <label>Select month: </label>
-                    <select onChange={handleMonthChange} value={selectedMonth}>
-                        <option value="">Select month</option>
-                        {months.map((month, index) => (
-                            <option key={index} value={month}>{month}</option>
-                        ))}
-                    </select>
-
-                    <label>Year: </label>
-                    <select onChange={handleYearChange} value={selectedYear}>
-                        <option value="">Select year</option>
-                        {availableYears.map((year, index) => (
-                            <option key={index} value={year}>{year}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className="savings-container">
-                {
-                    selectedMonth && selectedYear && (
-                        <>
-                            <h5>Total saved in {selectedMonth} {selectedYear}: {totalSavings} €</h5>
-                            <ul>
-                                {filteredSavings.map((event, index) => (
-                                    <li key={index}>
-                                        {event.date}: {event.sum} €
-                                    </li>
-                                ))}
-                            </ul>
-                        </>
-                    )
-                }
+                    < MonthMenu
+                        events={events}
+                        selectedMonth={selectedMonth}
+                        setSelectedMonth={setSelectedMonth}
+                        selectedYear={selectedYear}
+                        setSelectedYear={setSelectedYear}
+                    />
+                    {
+                        selectedMonth && selectedYear && (
+                            <>
+                                <h5>Total saved in {selectedMonth} {selectedYear}: {totalSavings} €</h5>
+                                <ul>
+                                    {filteredSavings.map((event, index) => (
+                                        <li key={index}>
+                                            {event.date}: {event.sum} €
+                                        </li>
+                                    ))}
+                                </ul>
+                            </>
+                        )
+                    }
                 </div>
             </div>
         </div >

@@ -93,7 +93,7 @@ const AddEvent = ({ events, setEvents }) => {
 
   return (
     <div>
-      <Button className="custom-button rounded" onClick={handleShow}>
+      <Button className="custom-AddEventButton rounded" onClick={handleShow}>
         Add new event
       </Button>
 

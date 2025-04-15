@@ -35,7 +35,7 @@ const DeleteEvent = ({ eventId, setEvents, events }) => {
     return (
         <button
             onClick={() => handleDeleteEvent(eventId)}
-            classname="custom-deleteButton"
+            className="custom-deleteButton"
         >
             X
         </button>

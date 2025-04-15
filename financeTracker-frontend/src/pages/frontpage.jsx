@@ -107,7 +107,6 @@ const Frontpage = ({ user, events, setEvents }) => {
         <SummaryBox events={events} />
         <AddEvent events={events} setEvents={setEvents} />
 
-        <h2>Event List</h2>
         <div>{mappedEvents(events)}</div>
       </div>
 

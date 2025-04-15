@@ -9,41 +9,46 @@
 /* ---Navigointivalikko--- */
 .custom-navbar {
   color: white !important;
-  background-color: #156082;
+  background-color: #156082; 
   padding: 10px;
   margin: 0px 30px 0px 0px;
 }
 
 .navbar-container {
   background-color: #156082;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;  
+  gap: 0px; 
   padding: 0px;
-  margin: 0px 0px 20px 0px;
 }
 
 
 /* ---Napit--- */
-.custom-button {
-  color: white !important;
-  background-color: #156082 !important;
-  padding: 10px !important;
-  margin: 16px;
+.custom-AddEventButton {
+  color: white;
+  background-color: #156082;
+  padding: 10px;
+  margin: 23px 0px 23px 0px;
+  width: 100%;
   border: none;
 }
 
 .custom-logoutButton {
-  color: black !important;
-  background-color: #ebeff3 !important;
+  color: black;
+  background-color: #ebeff3;
   border: none;
 }
 
 .custom-deleteButton {
-  margin-left: "10px";
-  color: #156082 !important;
-  border: "none" !important;
+  color: #156082;
+  border: none;
   outline: none;
-  background: "none" !important;
-  font-size: 10rem;
-  padding: 0;
+  background: none;
+  font-size: 17px;
+  font-weight: 500;
+  padding: 3;
 }
 
 
@@ -51,7 +56,7 @@
 .page-container {
   background-color: #ffffff;
   padding: 10px;
-  margin: 15px 45px 25px 25px;
+  margin: 15px 130px 25px 130px;
 }
 
 
@@ -113,6 +118,46 @@
 /* ---Savings-sivu--- */
 .savings-container {
   background-color: #ebeff3;
-  padding: 10px;
+  padding: 12px;
   border-radius: 1px;
 }
+
+
+/* ---Graphs-sivu--- */
+.piechart {
+  display: flex;
+  justify-content: right;
+  align-items: start;
+  margin-right: 0px;
+  gap: 50px
+  
+}
+
+.piechart-list {
+list-style: "none";
+padding: 0;
+margin-bottom: "8px";
+display: "flex";
+align-items: "center" 
+}
+
+
+
+/* ---MonthMenu--- */
+.month-menu-container {
+  display: grid;
+  grid-template-columns: 1fr 3.5fr;
+  margin-left: 0px;
+  margin-top: 0px;
+  width: fit-content;
+}
+
+.month-menu-label {
+  display: grid;
+ 
+  width: 140px; /* Kiinteä leveys, jotta dropdownit linjautuu */
+  margin-left: 50px;
+  margin-right: 10px;
+  font-weight: 500;
+}
+
