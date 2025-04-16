@@ -14,14 +14,15 @@ const AddEvent = ({ events, setEvents }) => {
 
   const handleShow = () => setShow(true)
   const handleClose = () => {
-    setShow(false);
-    setFormData({ is_income: null, sum: "", category: "", title: "", date: "" });
+    setShow(false)
+    setFormData({ is_income: null, sum: "", category: "", title: "", date: "" })
   }
 
 
   // Kategoriavaihtoehdot tuloille ja menoille
   const incomeCategories = ["Benefits", "Gifts", "Pension", "Savings", "Wage", "Other"]
-  const expenseCategories = ["Bills", "Car", "Clothes", "Food", "Fun", "Household supplies", "Housing", "Loan", "Pharmacy", "Phone and internet", "Restaurants and cafes", "Saving", "Shopping", "Other"]
+  const expenseCategories = ["Bills", "Car", "Clothes", "Food", "Fun", "Household supplies", "Housing", "Loan",
+    "Pharmacy", "Phone and internet", "Restaurants and cafes", "Saving", "Shopping", "Other"]
 
 
   const handleChange = (e) => {
@@ -61,7 +62,7 @@ const AddEvent = ({ events, setEvents }) => {
     try {
       // Lähettää tiedot backendille
       console.log("eventit addEventissä:", events)
-      console.log("Lähetettävä data:", JSON.stringify(requestBody));
+      console.log("Lähetettävä data:", JSON.stringify(requestBody))
       const response = await fetch("http://localhost:3001/api/events", {
         method: "POST",
         headers: {
@@ -74,20 +75,19 @@ const AddEvent = ({ events, setEvents }) => {
       console.log("response:", response)
 
       if (response.ok) {
-        const newEvent = await response.json();
+        const newEvent = await response.json()
         // Päivitetään tila, jotta uusi tapahtuma ilmestyy heti listaan
-        setEvents([...events, newEvent]);
-        alert("Event added!")
+        setEvents([...events, newEvent])
         handleClose()
       } else {
         const errorData = await response.json()
-        console.error("Virhe backendista:", errorData);
+        console.error("Virhe backendista:", errorData)
         alert(`Error: ${errorData.message || "Failed to add event."}`)
       }
     } catch (error) {
       // Handle fetch error
-      console.error('Fetch error:', error);
-      alert('Network error occurred.');
+      console.error('Fetch error:', error)
+      alert('Network error occurred.')
     }
   }
 
@@ -129,7 +129,12 @@ const AddEvent = ({ events, setEvents }) => {
             {formData.is_income !== null && (
               <Form.Group className="mb-3">
                 <Form.Label>Category</Form.Label>
-                <Form.Select name="category" onChange={handleChange} required>
+                <Form.Select
+                  name="category"
+                  value={formData.category || ""}
+                  onChange={handleChange} required
+                >
+                  <option value=""> Select category </option>
                   {(formData.is_income ? incomeCategories : expenseCategories).map((category, index) => (
                     <option key={index} value={category}>
                       {category}

@@ -1,5 +1,3 @@
-
-import { useNavigate, useParams } from "react-router-dom"
 import { useState, useEffect } from 'react'
 import React from 'react'
 import eventService from '../services/events'
@@ -8,11 +6,18 @@ import NavBar from '../components/navbar'
 import AddEvent from '../components/addEvent'
 import DeleteEvent from '../components/deleteEvent'
 import SummaryBox from "../components/summary"
+import MonthMenu from '../components/monthMenu'
+
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 
+const Frontpage = ({ events, setEvents }) => {
+  const currentDate = new Date()
+  const defaultMonth = months[currentDate.getMonth()]
+  const defaultYear = String(currentDate.getFullYear())
 
-const Frontpage = ({ user, events, setEvents }) => {
-  const [show, setShow] = useState(true)
+  const [selectedMonth, setSelectedMonth] = useState(defaultMonth)
+  const [selectedYear, setSelectedYear] = useState(defaultYear)
 
   // Etsii kaikki eventit
   useEffect(() => {
@@ -28,18 +33,14 @@ const Frontpage = ({ user, events, setEvents }) => {
   }, [setEvents])
 
 
-  // Laskee kokonaistulot
-  const totalIncome = events
-    .filter(event => event.is_income === true) // Suodatetaan vain income-tapahtumat
-    .reduce((sum, event) => sum + Math.abs(event.sum), 0) // Lasketaan yhteen absoluuttiset summat
+  // Filtteröi eventit valitut kuukauden/vuoden mukaan
+  const filteredEvents = events.filter(event => {
+    const eventDate = new Date(event.date)
+    const eventMonth = months[eventDate.getMonth()]
+    const eventYear = String(eventDate.getFullYear())
 
-  // Laskee kokonaismenot
-  const totalExpenses = events
-    .filter(event => event.is_income === false) // Suodatetaan vain expense-tapahtumat
-    .reduce((sum, event) => sum + Math.abs(event.sum), 0)
-
-  // Laskee tulot-menot
-  const balance = Math.round((totalIncome - totalExpenses) * 100) / 100
+    return eventMonth === selectedMonth && eventYear === selectedYear
+  })
 
 
 
@@ -90,10 +91,7 @@ const Frontpage = ({ user, events, setEvents }) => {
             }
           </div>
         </div>
-
       </div>
-
-
     )
   }
 
@@ -103,11 +101,17 @@ const Frontpage = ({ user, events, setEvents }) => {
     <div>
       < NavBar />
       <div className="page-container">
-        <h3>Welcome to your dashboard {user?.username}!</h3>
-        <SummaryBox events={events} />
+        < MonthMenu
+          events={events}
+          selectedMonth={selectedMonth}
+          setSelectedMonth={setSelectedMonth}
+          selectedYear={selectedYear}
+          setSelectedYear={setSelectedYear}
+        />
+        <SummaryBox events={filteredEvents} />
         <AddEvent events={events} setEvents={setEvents} />
 
-        <div>{mappedEvents(events)}</div>
+        <div>{mappedEvents(filteredEvents)}</div>
       </div>
 
     </div>

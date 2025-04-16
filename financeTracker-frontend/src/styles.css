@@ -39,16 +39,28 @@
   color: black;
   background-color: #ebeff3;
   border: none;
+  
 }
 
 .custom-deleteButton {
-  color: #156082;
+  color: #cfc61d;
   border: none;
   outline: none;
   background: none;
   font-size: 17px;
   font-weight: 500;
   padding: 3;
+}
+
+.custom-percentageButton {
+  color: #156082;
+  outline: none;
+  border-width: 1px;
+  background-color: #ebeff3e8;
+  font-size: 15px;
+  font-weight: 500;
+  width: 150px;
+  margin: 0px 0px 12px 0px
 }
 
 
@@ -64,7 +76,6 @@
 .summary-box {
   background-color: #f1f4f7;
   padding: 10px;
-  border-radius: 1px;
 
 }
 
@@ -72,12 +83,20 @@
   display: grid;
   grid-template-columns: 1fr 1.7fr 2.7fr;
   align-items: start;
+  margin: 0px 0px 0px 10px;
 }
 
-.summary-labels p,
-.summary-values p,
+.summary-labels {
+  font-weight: 400;
+  margin: 0px 0px 0px 10px;
+}
+
+.summary-values {
+  font-weight: 500;
+}
+
 .category-summary p {
-  margin: 0.2rem 0;
+  margin: 0px 0px 4px 0px;
 }
 
 
@@ -126,10 +145,10 @@
 /* ---Graphs-sivu--- */
 .piechart {
   display: flex;
-  justify-content: right;
+  justify-content: center;
   align-items: start;
   margin-right: 0px;
-  gap: 50px
+  gap: 15px
   
 }
 
@@ -147,8 +166,7 @@ align-items: "center"
 .month-menu-container {
   display: grid;
   grid-template-columns: 1fr 3.5fr;
-  margin-left: 0px;
-  margin-top: 0px;
+  margin: 0px 0px 40px 0px;
   width: fit-content;
 }
 

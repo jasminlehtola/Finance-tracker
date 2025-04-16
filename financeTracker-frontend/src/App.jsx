@@ -35,8 +35,8 @@ const App = () => {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/frontpage" element={<Frontpage user={user} events={events} setEvents={setEvents}/>} />
-          <Route path="/frontpage/:id" element={<Frontpage user={user} events={events} setEvents={setEvents}/>} />
+          <Route path="/frontpage" element={<Frontpage events={events} setEvents={setEvents}/>} />
+          <Route path="/frontpage/:id" element={<Frontpage events={events} setEvents={setEvents}/>} />
           <Route path="/login" element={<Login user={user} setUser={setUser}/>} />
           <Route path="/savings" element={<Savings events={events} setEvents={setEvents}/>} />
           <Route path="/graphs" element={<Graphs events={events} setEvents={setEvents} />} />
