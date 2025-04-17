@@ -1,3 +1,4 @@
+/* ---Errormessages--- */
 .error {
   color: red;
   padding: 5px;
@@ -5,8 +6,19 @@
   margin: 10px 0;
 }
 
+.password-error {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 0px;
+}
 
-/* ---Navigointivalikko--- */
+.form-error {
+  margin-top: 10px;
+  color: #bc1e1e;
+  font-size: 14px;
+}
+
+/* ---Navigation bar--- */
 .custom-navbar {
   color: white !important;
   background-color: #156082; 
@@ -25,7 +37,37 @@
 }
 
 
-/* ---Napit--- */
+/* ---Buttons--- */
+.custom-BigBlueButton {
+  color: white;
+  background-color: #156082;
+  padding: 7px;
+  margin: 25px 25px 25px 0px;
+  width: 120px;
+  border: none;
+  border-radius: 5px;
+}
+
+.custom-SmallBlueButton {
+  color: white;
+  background-color: #156082;
+  padding: 7px;
+  margin: 25px 25px 25px 0px;
+  width: 90px;
+  border: none;
+  border-radius: 5px;
+}
+
+.custom-GreyButton {
+  color: rgb(0, 0, 0);
+  background-color: #adb3b6;
+  padding: 7px;
+  margin: 25px 0px 25px 0px;
+  width: 140px;
+  border: none;
+  border-radius: 5px;
+}
+
 .custom-AddEventButton {
   color: white;
   background-color: #156082;
@@ -64,7 +106,7 @@
 }
 
 
-/* ---Koko sivun tausta--- */
+/* ---Background of the page--- */
 .page-container {
   background-color: #ffffff;
   padding: 10px;
@@ -72,7 +114,7 @@
 }
 
 
-/* ---Kuukauden summary-taulukko--- */
+/* ---Summary of the month-table--- */
 .summary-box {
   background-color: #f1f4f7;
   padding: 10px;
@@ -100,14 +142,14 @@
 }
 
 
-/* ---Events-taulukon tausta--- */
+/* ---Background of events-table--- */
 .event-container {
   background-color: #ebeff3;
   padding: 10px;
   border-radius: 1px;
 }
 
-/* Otsikkorivi */
+/* Header line */
 .event-header {
   display: grid;
   font-weight: bold;
@@ -117,7 +159,7 @@
   text-align: left;
 }
 
-/* Yksittäinen tapahtumarivi taulukossa*/
+/* Single event row in the table*/
 .event-item {
   display: grid;
   background-color: white;
@@ -134,7 +176,7 @@
 }
 
 
-/* ---Savings-sivu--- */
+/* ---Savings-page--- */
 .savings-container {
   background-color: #ebeff3;
   padding: 12px;
@@ -142,7 +184,7 @@
 }
 
 
-/* ---Graphs-sivu--- */
+/* ---Graphs-page--- */
 .piechart {
   display: flex;
   justify-content: center;
@@ -173,7 +215,7 @@ align-items: "center"
 .month-menu-label {
   display: grid;
  
-  width: 140px; /* Kiinteä leveys, jotta dropdownit linjautuu */
+  width: 140px; 
   margin-left: 50px;
   margin-right: 10px;
   font-weight: 500;

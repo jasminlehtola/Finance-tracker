@@ -55,7 +55,7 @@ const Login = ({ user, setUser }) => {
       window.localStorage.setItem(
         'loggedFinanceTrackerUser', JSON.stringify(user)
       )
-      console.log("Kirjautumistiedot localstoragessa", window.localStorage.getItem('loggedFinanceTrackerUser') )
+      console.log("Kirjautumistiedot localstoragessa", window.localStorage.getItem('loggedFinanceTrackerUser'))
 
       setUser(user)
       setUsername('')
@@ -89,28 +89,31 @@ const Login = ({ user, setUser }) => {
 
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <input
-            type="text"
-            value={username}
-            placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            type="password"
-            value={password}
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <Notification message={errorMessage} isError={true} />
+    <div className="page-container">
+      <div className="event-container" >
+        <h2>Login</h2>
+        <form onSubmit={handleLogin}>
+          <div>
+            <input
+              type="text"
+              value={username}
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              value={password}
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button className="custom-BigBlueButton" type="submit">Login</button>
+          <button className="custom-GreyButton" onClick={() => navigate("/home")}>Back to Home</button>
+        </form>
+        <Notification message={errorMessage} isError={true} />
+      </div>
     </div>
   )
 }
