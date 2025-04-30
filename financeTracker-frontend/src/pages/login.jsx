@@ -1,13 +1,11 @@
 import { useState } from "react"
+import axios from 'axios'
 import { useNavigate } from "react-router-dom"
-import Frontpage from "./frontpage"
-import NavBar from '../components/navbar'
 import loginService from '../services/login'
-import eventService from '../services/events'
 
 
 const Notification = ({ message, isError }) => {
-  if (!message) return null; // Ei näytetä mitään, jos viestiä ei ole
+  if (!message) return null // Ei näytetä mitään, jos viestiä ei ole
 
   return (
     <div className={isError ? "error" : "success"}>
@@ -33,21 +31,50 @@ const Login = ({ user, setUser }) => {
       setErrorMessage('Username and password are required')
 
       setTimeout(() => {
-        console.log("Error message given")
         setErrorMessage('')
       }, 5000)
       return
     }
 
+
     try {
+      const response = await axios.post("http://localhost:3001/api/login", {
+        username,
+        password
+      })
+      if (!response.data.accessToken || !response.data.refreshToken) {
+        throw new Error("No token received")
+      }
+
+      console.log("Vastaus backendistä:", response)
+
+      
+      const { accessToken, refreshToken, ...userData } = response.data
+
+      localStorage.setItem("accessToken", accessToken)
+      localStorage.setItem("refreshToken", refreshToken)
+      localStorage.setItem("loggedFinanceTrackerUser", JSON.stringify(userData))
+
+      console.log(window.localStorage.getItem('loggedFinanceTrackerUser'))
+      console.log("Credentialit tehty, kirjautuminen onnistui!")
+      console.log('User logged in:', userData)
+      setUser(userData)
+      navigate(`/frontpage/${userData.id}`)
+    } catch (error) {
+      console.error("Login failed:", error)
+      setErrorMessage('Wrong username or password')
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000)
+    }
+  }
+
+    
+  /*try {
       const loginCredentials = { username: username, password: password }
       const user = await loginService.login(loginCredentials) // Pyytää tokenin backendistä
       console.log("Saatiin vastaus, login.js valmis:", user)
 
-      /* if (!user || !user.token) {
-        throw new Error("Login failed: No token received")
-      }
-        */
 
       console.log("Credentialit tehty, kirjautuminen onnistui!")
 
@@ -70,6 +97,7 @@ const Login = ({ user, setUser }) => {
       }, 5000)
     }
   }
+  */
 
   /*loginService.setToken(user.token) // Asettaa tokenin palvelukutsuihin
   setUser(user)

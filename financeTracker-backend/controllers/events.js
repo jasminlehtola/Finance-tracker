@@ -12,9 +12,9 @@ eventsRouter.get('/', authenticateToken, async (request, response) => {
     console.log("request.user:", request.user)
 
     const events = await Event.findAll({ where: { "user_id": request.user.id } })
-    console.log("eventit:", events)
     response.json(events)
   } catch (error) {
+    console.log(error)
     response.status(500).json({ error: 'Failed to fetch events' })
   }
 })

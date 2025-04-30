@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Login from '../pages/login'
 //import { getAccessToken, refreshAccessToken } from './auth'
 const baseUrl = 'http://localhost:3001/api/login'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 const LogoutButton = () => {
@@ -7,7 +7,10 @@ const LogoutButton = () => {
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedFinanceTrackerUser')
+    window.localStorage.removeItem('refreshToken')
+    window.localStorage.removeItem('accessToken')
     navigate('/home')
+    console.log("Logged out user")
   }
 
   return (
@@ -26,9 +29,9 @@ const NavBar = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
-                <a className="nav-link active custom-navbar" aria-current="page" href="/frontpage">Frontpage</a>
-                <a className="nav-link custom-navbar" href="/savings">Savings</a>
-                <a className="nav-link custom-navbar" href="/graphs">Graphs</a>
+                <Link className="nav-link active custom-navbar" aria-current="page" to="/frontpage">Frontpage</Link>
+                <Link className="nav-link custom-navbar" to="/savings">Savings</Link>
+                <Link className="nav-link custom-navbar" to="/graphs">Graphs</Link>
 
                 <LogoutButton />
 

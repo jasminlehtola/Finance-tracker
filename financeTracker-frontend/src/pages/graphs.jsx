@@ -6,12 +6,16 @@ import { PieChart, Pie, Cell, Tooltip } from "recharts"
 
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-const COLORS = ["#4682B4", "#48D1CC", "#ADD8E6", "#7B68EE", "#4d45bc", "#483D8B", "#87CEEB", "#e1e334", "#afbbbf", "#3de8e9", "#267c7c", "#aaae49", "#002ba6", "#d6d07f"]
+const COLORS = ["#4682B4", "#DC143C", "#ADD8E6", "#CDBA47", "#FF8C00", "#483D8B", "#2E8B57", "#a7987b", "#afbbbf", "#556B2F", "#267c7c", "#7f2c2c", "#e47fbd", "#45657e"]
 
 
 const Graphs = ({ events, setEvents }) => {
-    const [selectedMonth, setSelectedMonth] = useState("")
-    const [selectedYear, setSelectedYear] = useState("")
+    const currentDate = new Date()
+    const defaultMonth = months[currentDate.getMonth()]
+    const defaultYear = String(currentDate.getFullYear())
+
+    const [selectedMonth, setSelectedMonth] = useState(defaultMonth)
+    const [selectedYear, setSelectedYear] = useState(defaultYear)
     const [showPercentages, setShowPercentages] = useState(false)
 
     // Etsii kaikki eventit
@@ -70,6 +74,9 @@ const Graphs = ({ events, setEvents }) => {
         : rawData
 
 
+    const sortedData = [...data].sort((a, b) => b.value - a.value)
+
+
 
     return (
         <div>
@@ -84,9 +91,9 @@ const Graphs = ({ events, setEvents }) => {
                 />
                 {selectedMonth && selectedYear && (
                     <div className="piechart">
-                        <PieChart width={420} height={400}>
+                        <PieChart width={470} height={400}>
                             <Pie
-                                data={data}
+                                data={sortedData}
                                 dataKey="value"
                                 nameKey="name"
                                 cx="50%"
@@ -96,22 +103,23 @@ const Graphs = ({ events, setEvents }) => {
                                     showPercentages ? `${value}%` : `${value} €`
                                 }
                             >
-                                {data.map((entry, index) => (
+                                {sortedData.map((entry, index) => (
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                             </Pie>
                             <Tooltip />
                         </PieChart>
                         <div>
+                            <h4>{selectedMonth}</h4>
                             <button className="custom-percentageButton"
                                 onClick={() => setShowPercentages(prev => !prev)}>
                                 {showPercentages ? "Show euros" : "Show percentages"}
                             </button>
                             <div>
 
-                                <h4>Expenses</h4>
+                                <h6>Expenses</h6>
                                 <ul style={{ listStyle: "none", padding: 0 }}>
-                                    {data.map((entry, index) => (
+                                    {sortedData.map((entry, index) => (
                                         <li key={index} style={{ marginBottom: "8px", display: "flex", alignItems: "center" }}>
                                             <div style={{
                                                 width: "16px",

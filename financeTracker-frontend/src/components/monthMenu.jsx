@@ -1,5 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
-import eventService from '../services/events'
+import { useMemo } from 'react'
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
@@ -7,8 +6,6 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 const MonthMenu = ({ events, selectedMonth, setSelectedMonth, selectedYear, setSelectedYear }) => {
     const handleMonthChange = (e) => setSelectedMonth(e.target.value)
     const handleYearChange = (e) => setSelectedYear(e.target.value)
-
-    console.log("Kaikki tapahtumat monthMenussa:", events)
 
 
     // Luodaan lista vuosista datan perusteella
@@ -28,7 +25,7 @@ const MonthMenu = ({ events, selectedMonth, setSelectedMonth, selectedYear, setS
                 ))}
             </select>
 
-            <label>Year: </label>
+            <label>Select year: </label>
             <select className="month-menu-label" onChange={handleYearChange} value={selectedYear}>
                 <option value="">Select year</option>
                 {availableYears.map((year, index) => (

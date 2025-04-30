@@ -42,7 +42,7 @@ loginRouter.post('/', async (request, response) => {
   }
 
   // Luodaan pääsytunnus (access token)
-  const accessToken = jwt.sign(userForToken, SECRET, { expiresIn: '1h' })
+  const accessToken = jwt.sign(userForToken, SECRET, { expiresIn: '10s' })
 
   // Luodaan uudelleenlataustunnus (refresh token)
   const refreshToken = jwt.sign(userForToken, SECRET, { expiresIn: '1d' })
@@ -66,10 +66,10 @@ loginRouter.post('/refresh', async (request, response) => {
 
   try {
   // Tarkistetaan, onko refresh token validi ja ei ole vanhentunut
-  const decoded = jwt.verify(refreshToken, REFRESH_SECRET)
+  const decoded = jwt.verify(refreshToken, SECRET)
     
   // Luodaan uusi access token
-  const newAccessToken = jwt.sign({ userId: decoded.userId }, SECRET, { expiresIn: '1h' })
+  const newAccessToken = jwt.sign({ username: decoded.username, id: decoded.id }, SECRET, { expiresIn: '1h' })
 
   return response.json({ accessToken: newAccessToken })
   } catch (error) {

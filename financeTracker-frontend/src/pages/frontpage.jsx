@@ -18,6 +18,8 @@ const Frontpage = ({ events, setEvents }) => {
 
   const [selectedMonth, setSelectedMonth] = useState(defaultMonth)
   const [selectedYear, setSelectedYear] = useState(defaultYear)
+  
+
 
   // Etsii kaikki eventit
   useEffect(() => {
@@ -26,7 +28,7 @@ const Frontpage = ({ events, setEvents }) => {
         const eventsData = await eventService.getAll()
         setEvents(eventsData)
       } catch (error) {
-        console.error("Failed to fetch events:", error)
+        console.error("Failed to fetch events from eventService:", error)
       }
     }
     fetchEvents()

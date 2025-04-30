@@ -18,6 +18,7 @@ import {
 const App = () => {
   const [events, setEvents] = useState([])
   const [user, setUser] = useState(null)
+  
 
   useEffect(() => {
     // Yritetään lukea käyttäjätiedot localStoragesta
@@ -27,7 +28,8 @@ const App = () => {
       setUser(loggedUser)
     }
   }, [])
-
+  
+  
 
   return (
     <div>

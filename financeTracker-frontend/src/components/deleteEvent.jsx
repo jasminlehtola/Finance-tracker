@@ -1,28 +1,23 @@
 import React, { useState } from "react"
-import { Button } from "react-bootstrap"
+import api from '../services/auth'
 
 const DeleteEvent = ({ eventId, setEvents, events }) => {
 
     const handleDeleteEvent = async (eventId) => {
-        const user = JSON.parse(window.localStorage.getItem("loggedFinanceTrackerUser"))
-        const token = user.accessToken
-
+        const confirmDelete = window.confirm("Do you really want to delete this event?")
+        if (!confirmDelete) {
+            return 
+        }
 
         try {
-            const response = await fetch(`http://localhost:3001/api/events/${eventId}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`,
-                },
-            })
+            const response = await api.delete(`/events/${eventId}`)
             console.log("Deletoitava id on:", eventId)
-            console.log(response)
+            console.log("Deleten response:", response)
 
-            if (response.ok) {
+            if (response.status === 200 || response.status === 204) {
                 // Päivitetään tapahtumat, jotta poistetut tapahtumat eivät enää näy
-                setEvents(events.filter(event => event.id !== eventId));
-                alert("Event deleted successfully!")
+                setEvents(events.filter(event => event.id !== eventId))
+                console.log("Event deleted successfully.")
             } else {
                 alert("Failed to delete event.")
             }

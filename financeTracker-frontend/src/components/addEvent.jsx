@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Modal, Button, Form, ToggleButton, ToggleButtonGroup, Toast, Dropdown, Col, Row } from "react-bootstrap"
+import { addNewEvent } from "../services/events"
 
 
 const AddEvent = ({ events, setEvents }) => {
@@ -12,6 +13,13 @@ const AddEvent = ({ events, setEvents }) => {
     date: ""
   })
 
+  // Kategoriavaihtoehdot tuloille ja menoille
+  const incomeCategories = ["Benefits", "Gifts", "Pension", "Savings", "Wage", "Other"]
+  const expenseCategories = ["Bills", "Car", "Clothes", "Food", "Fun", "Household supplies", "Housing", "Loan",
+    "Pharmacy", "Phone and internet", "Rent", "Restaurants and cafes", "Saving", "Shopping", "Taxes", "Other"]
+
+
+  // Avaa tapahtuman lisäämisvalikon
   const handleShow = () => setShow(true)
   const handleClose = () => {
     setShow(false)
@@ -19,16 +27,11 @@ const AddEvent = ({ events, setEvents }) => {
   }
 
 
-  // Kategoriavaihtoehdot tuloille ja menoille
-  const incomeCategories = ["Benefits", "Gifts", "Pension", "Savings", "Wage", "Other"]
-  const expenseCategories = ["Bills", "Car", "Clothes", "Food", "Fun", "Household supplies", "Housing", "Loan",
-    "Pharmacy", "Phone and internet", "Restaurants and cafes", "Saving", "Shopping", "Other"]
-
-
+  // Huolehtii kenttien muutoksista
   const handleChange = (e) => {
     const { name, value } = e.target
-
     setFormData({ ...formData, [name]: value })
+
     //Oman kategorian lisääminen:
     //if (name === "category") {
     //if (value && !incomeCategories.includes(value)) {
@@ -37,19 +40,17 @@ const AddEvent = ({ events, setEvents }) => {
     //}
   }
 
+  // Huolehtii income/expense-valinnan muutoksesta
   const handleTypeChange = (value) => {
     setFormData({ ...formData, is_income: value })
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    
 
-    // Haetaan token käyttäjäoliosta
     const user = JSON.parse(window.localStorage.getItem('loggedFinanceTrackerUser'))
-    const token = user.accessToken
-    console.log("Lähetetään tiedot:", formData)
-    console.log("Token:", token)
-
+    
     const requestBody = {
       user_id: user.id,
       is_income: formData.is_income,
@@ -60,36 +61,16 @@ const AddEvent = ({ events, setEvents }) => {
     }
 
     try {
-      // Lähettää tiedot backendille
-      console.log("eventit addEventissä:", events)
-      console.log("Lähetettävä data:", JSON.stringify(requestBody))
-      const response = await fetch("http://localhost:3001/api/events", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(requestBody),
-      })
-
-      console.log("response:", response)
-
-      if (response.ok) {
-        const newEvent = await response.json()
-        // Päivitetään tila, jotta uusi tapahtuma ilmestyy heti listaan
-        setEvents([...events, newEvent])
-        handleClose()
-      } else {
-        const errorData = await response.json()
-        console.error("Virhe backendista:", errorData)
-        alert(`Error: ${errorData.message || "Failed to add event."}`)
-      }
+      const newEvent = await addNewEvent(requestBody)
+      setEvents([...events, newEvent])
+      handleClose()
     } catch (error) {
-      // Handle fetch error
-      console.error('Fetch error:', error)
-      alert('Network error occurred.')
+      console.error("Failed to add event:", error)
+      alert("Error: Failed to add event.")
     }
   }
+
+  
 
   return (
     <div>
@@ -167,10 +148,10 @@ const AddEvent = ({ events, setEvents }) => {
             </Form.Group>
 
 
-            <Button className="custom-button" type="submit">
+            <Button className="custom-SmallBlueButton" type="submit">
               Save
             </Button>
-            <Button className="custom-button" onClick={handleClose} >
+            <Button className="custom-SmallBlueButton" onClick={handleClose} >
               Cancel
             </Button>
           </Form>
