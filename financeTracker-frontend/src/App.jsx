@@ -35,7 +35,7 @@ const App = () => {
     <div>
       <Router>
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/frontpage" element={<Frontpage events={events} setEvents={setEvents}/>} />
           <Route path="/frontpage/:id" element={<Frontpage events={events} setEvents={setEvents}/>} />

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 
@@ -9,7 +10,7 @@ const LogoutButton = () => {
     window.localStorage.removeItem('loggedFinanceTrackerUser')
     window.localStorage.removeItem('refreshToken')
     window.localStorage.removeItem('accessToken')
-    navigate('/home')
+    navigate('/')
     console.log("Logged out user")
   }
 
@@ -19,16 +20,34 @@ const LogoutButton = () => {
 }
 
 const NavBar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const toggleMenu = () => {
+    setIsMenuOpen(prev => !prev)
+  }
+
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+  }
+
   return (
     <div>
       <div className="navbar-container">
         <nav className="navbar navbar-expand-lg custom-navbar">
           <div className="container-fluid">
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <button
+              className="navbar-toggler"
+              type="button"
+              onClick={toggleMenu}
+              aria-controls="navbarNav"
+              aria-expanded={isMenuOpen}
+              aria-label="Toggle navigation"
+            >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-              <div className="navbar-nav">
+
+            <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`} id="navbarNav">
+              <div className="navbar-nav custom-navbar d-flex flex-column flex-lg-row">
                 <Link className="nav-link active custom-navbar" aria-current="page" to="/frontpage">Frontpage</Link>
                 <Link className="nav-link custom-navbar" to="/savings">Savings</Link>
                 <Link className="nav-link custom-navbar" to="/graphs">Graphs</Link>

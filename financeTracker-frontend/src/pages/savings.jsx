@@ -7,8 +7,12 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 
 
 const Savings = ({ events, setEvents }) => {
-    const [selectedMonth, setSelectedMonth] = useState("")
-    const [selectedYear, setSelectedYear] = useState("")
+    const currentDate = new Date()
+    const defaultMonth = months[currentDate.getMonth()]
+    const defaultYear = String(currentDate.getFullYear())
+
+    const [selectedMonth, setSelectedMonth] = useState(defaultMonth)
+    const [selectedYear, setSelectedYear] = useState(defaultYear)
 
     // Etsii kaikki eventit
     useEffect(() => {

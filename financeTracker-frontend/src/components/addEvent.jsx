@@ -15,8 +15,9 @@ const AddEvent = ({ events, setEvents }) => {
 
   // Kategoriavaihtoehdot tuloille ja menoille
   const incomeCategories = ["Benefits", "Gifts", "Pension", "Savings", "Wage", "Other"]
-  const expenseCategories = ["Bills", "Car", "Clothes", "Food", "Fun", "Household supplies", "Housing", "Loan",
-    "Pharmacy", "Phone and internet", "Rent", "Restaurants and cafes", "Saving", "Shopping", "Taxes", "Other"]
+  const expenseCategories = ["Bills", "Car", "Clothes", "Food", "Fun", "Hobbies", "Household supplies", 
+    "Housing", "Loan", "Pharmacy", "Phone and internet", "Rent", "Restaurants and cafes", "Saving", 
+    "Shopping", "Taxes", "Travelling", "Other"]
 
 
   // Avaa tapahtuman lisäämisvalikon

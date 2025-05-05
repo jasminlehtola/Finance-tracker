@@ -47,7 +47,11 @@ const Register = () => {
         <h2>Create an account</h2>
 
         <form onSubmit={handleRegister}>
+          Choose username
+          <div></div>
           <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <div></div>
+          Choose password (must be at least 8 characters long, contain one uppercase letter and one number)
           <div></div>
           <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
           <div>
@@ -56,11 +60,7 @@ const Register = () => {
                 Password must be at least 8 characters long, contain one uppercase letter and one number.
               </p>
             )}
-            {errorMessage && (
-              <div className="form-error">
-                {errorMessage}
-              </div>
-            )}
+            
             <button className="custom-SmallBlueButton" type="submit">Register</button>
             <button className="custom-GreyButton" type="button" onClick={() => navigate("/home")}>Back to Home</button>
           </div>

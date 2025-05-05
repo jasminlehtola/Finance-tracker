@@ -138,7 +138,7 @@ const Login = ({ user, setUser }) => {
             />
           </div>
           <button className="custom-BigBlueButton" type="submit">Login</button>
-          <button className="custom-GreyButton" onClick={() => navigate("/home")}>Back to Home</button>
+          <button className="custom-GreyButton" onClick={() => navigate("/")}>Back to Home</button>
         </form>
         <Notification message={errorMessage} isError={true} />
       </div>

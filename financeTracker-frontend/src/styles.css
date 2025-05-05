@@ -7,7 +7,7 @@
 }
 
 .password-error {
-  color: grey;
+  color: rgb(132, 11, 11);
   font-size: 12px;
   margin-bottom: 0px;
 }
@@ -18,12 +18,21 @@
   font-size: 14px;
 }
 
+/* ---Background of the page--- */
+.page-container {
+  background-color: #ffffff;
+  padding: 0.5%;
+  margin: 1% 9% 5% 9%;
+}
+
 /* ---Navigation bar--- */
 .custom-navbar {
   color: white !important;
-  background-color: #156082; 
-  padding: 10px;
-  margin: 0px 30px 0px 0px;
+  font-size: 105%;
+  background-color: #156082;
+  gap: 20%;
+  justify-content: center;
+  align-items: center;
 }
 
 .navbar-container {
@@ -31,8 +40,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;  
-  gap: 0px; 
+  width: 100%;
+  gap: 0px;
   padding: 0px;
 }
 
@@ -80,8 +89,10 @@
 .custom-logoutButton {
   color: black;
   background-color: #ebeff3;
+  padding: 3%;
   border: none;
-  
+  font-size: 110%;
+
 }
 
 .custom-deleteButton {
@@ -102,22 +113,15 @@
   font-size: 15px;
   font-weight: 500;
   width: 150px;
-  margin: 0px 0px 12px 0px
-}
-
-
-/* ---Background of the page--- */
-.page-container {
-  background-color: #ffffff;
-  padding: 10px;
-  margin: 15px 130px 25px 130px;
+  padding: 4px;
+  margin: 5px 0px 30px 0px
 }
 
 
 /* ---Summary of the month-table--- */
 .summary-box {
-  background-color: #f1f4f7;
-  padding: 10px;
+  background-color: #dfe2e6;
+  padding: 0.6%;
 
 }
 
@@ -144,9 +148,8 @@
 
 /* ---Background of events-table--- */
 .event-container {
-  background-color: #ebeff3;
-  padding: 10px;
-  border-radius: 1px;
+  background-color: #dfe2e6;
+  padding: 0.5%;
 }
 
 /* Header line */
@@ -178,28 +181,55 @@
 
 /* ---Savings-page--- */
 .savings-container {
-  background-color: #ebeff3;
+  background-color: #dfe2e6;
   padding: 12px;
   border-radius: 1px;
 }
 
 
 /* ---Graphs-page--- */
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .chart-container {
+    flex-direction: row; /*isommilla näytöillä vierekkäin*/
+    justify-content: space-evenly;
+    align-items: flex-start;
+  }
+  .chart-box {
+    flex: 1;
+    width: 100%;
+    max-width: 48%;
+  }
+}
+
+.chart-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  max-width: 100%;
+  flex: 1 1 300px;
+  list-style: none;
+}
 .piechart {
   display: flex;
   justify-content: center;
   align-items: start;
   margin-right: 0px;
   gap: 15px
-  
 }
 
-.piechart-list {
-list-style: "none";
-padding: 0;
-margin-bottom: "8px";
-display: "flex";
-align-items: "center" 
+.piechart svg {
+  max-width: 100%;
+  height: auto;
 }
 
 
@@ -214,10 +244,9 @@ align-items: "center"
 
 .month-menu-label {
   display: grid;
- 
-  width: 140px; 
+
+  width: 140px;
   margin-left: 50px;
   margin-right: 10px;
   font-weight: 500;
 }
-
