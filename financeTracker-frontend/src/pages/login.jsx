@@ -38,18 +38,13 @@ const Login = ({ user, setUser }) => {
 
 
     try {
-      const response = await axios.post("http://localhost:3001/api/login", {
+      const data = await loginService.login({
         username,
         password
       })
-      if (!response.data.accessToken || !response.data.refreshToken) {
-        throw new Error("No token received")
-      }
-
-      console.log("Vastaus backendistä:", response)
 
       
-      const { accessToken, refreshToken, ...userData } = response.data
+      const { accessToken, refreshToken, ...userData } = data
 
       localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
