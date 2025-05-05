@@ -1,8 +1,10 @@
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
 
+const baseURL = '/api'
+
 const api = axios.create({
-  baseURL: 'http://localhost:3001/api',
+  baseURL: baseURL,
 })
 
 // Apufunktio tarkistaa, onko token vanhentunut
@@ -34,7 +36,7 @@ api.interceptors.request.use(async (config) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3001/api/login/refresh', {
+      const response = await axios.post(`${baseURL}/login/refresh`, {
         refreshToken: refreshToken,
       })
       console.log(response)
