@@ -14,12 +14,12 @@ const passwordIsValid = (password) => {
 
 
 userRouter.get('/', async (request, response) => {
-  const users = await User.findAll()
+  const users = await User.findAll({attributes: { exclude: ['password'] }})
   response.json(users)
 })
 
 userRouter.get('/:id', async (request, response) => {
-  const user = await User.findByPk(request.params.id)
+  const user = await User.findByPk(request.params.id, {attributes: { exclude: ['password'] }})
   if (user) {
     response.json(user)
   } else {
