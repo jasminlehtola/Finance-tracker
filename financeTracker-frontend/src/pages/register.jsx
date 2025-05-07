@@ -62,7 +62,7 @@ const Register = () => {
             )}
             
             <button className="custom-SmallBlueButton" type="submit">Register</button>
-            <button className="custom-GreyButton" type="button" onClick={() => navigate("/home")}>Back to Home</button>
+            <button className="custom-GreyButton" type="button" onClick={() => navigate("/")}>Back to Home</button>
           </div>
         </form>
       </div>
