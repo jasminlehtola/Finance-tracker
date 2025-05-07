@@ -19,7 +19,7 @@ const Graphs = ({ events, setEvents }) => {
     const [selectedYear, setSelectedYear] = useState(defaultYear)
     const [showPercentages, setShowPercentages] = useState(false)
 
-    // Säätää graafin koko jos kyseessä on mobiililaite
+    // Säätää graafin kokoa jos kyseessä on mobiililaite
     const isMobile = window.innerWidth < 768;
     const pieRadius = isMobile ? 100 : 150;
 

@@ -32,13 +32,6 @@ const AddEvent = ({ events, setEvents }) => {
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
-
-    //Oman kategorian lisääminen:
-    //if (name === "category") {
-    //if (value && !incomeCategories.includes(value)) {
-    //setCategories([...incomeCategories, value]) // Lisää uusi kategoria, jos se ei ole listassa
-    //}
-    //}
   }
 
   // Huolehtii income/expense-valinnan muutoksesta

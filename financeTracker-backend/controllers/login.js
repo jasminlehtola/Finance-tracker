@@ -2,16 +2,8 @@ const jwt = require('jsonwebtoken')
 const bcryptjs = require('bcryptjs')
 const loginRouter = require('express').Router()
 const { User } = require('../models/user')
-const { SECRET, REFRESH_SECRET  } = require('../utils/config')
+const { SECRET  } = require('../utils/config')
 
-const authenticateToken = require('../middleware/auth')
-
-/* 
-// Palauta tapahtumat käyttäjälle
-loginRouter.get('/', authenticateToken, async (request, response) => {
-  const user = request.user  // Käyttäjä, joka saatiin tokenista
-})
-  */
 
 
 loginRouter.post('/', async (request, response) => {

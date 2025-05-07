@@ -1,5 +1,4 @@
 const userRouter = require('express').Router()
-const logger = require('../utils/logger')
 const { User } = require('../models/user')
 const bcryptjs = require('bcryptjs')
 
@@ -12,7 +11,7 @@ const passwordIsValid = (password) => {
   return hasUppercase && hasNumber && isLongEnough
 }
 
-
+// Kun käyttäjätietoja palautetaan, salasana-sarake poistetaan
 userRouter.get('/', async (request, response) => {
   const users = await User.findAll({attributes: { exclude: ['password'] }})
   response.json(users)

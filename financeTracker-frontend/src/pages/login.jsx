@@ -1,5 +1,4 @@
 import { useState } from "react"
-import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import loginService from '../services/login'
 
@@ -65,50 +64,6 @@ const Login = ({ user, setUser }) => {
   }
 
     
-  /*try {
-      const loginCredentials = { username: username, password: password }
-      const user = await loginService.login(loginCredentials) // Pyytää tokenin backendistä
-      console.log("Saatiin vastaus, login.js valmis:", user)
-
-
-      console.log("Credentialit tehty, kirjautuminen onnistui!")
-
-      // Tallentaa kirjautumistiedot localStorageen
-      window.localStorage.setItem(
-        'loggedFinanceTrackerUser', JSON.stringify(user)
-      )
-      console.log("Kirjautumistiedot localstoragessa", window.localStorage.getItem('loggedFinanceTrackerUser'))
-
-      setUser(user)
-      setUsername('')
-      setPassword('')
-      console.log('User logged in:', user)
-      navigate(`/frontpage/${user.id}`)
-    } catch (error) {
-      console.error('Login error:', error)
-      setErrorMessage('Wrong username or password')
-      setTimeout(() => {
-        setErrorMessage('')
-      }, 5000)
-    }
-  }
-  */
-
-  /*loginService.setToken(user.token) // Asettaa tokenin palvelukutsuihin
-  setUser(user)
-  setUsername('')
-  setPassword('')
-  navigate(`/frontpage/${user.id}`) 
-  console.log('logging in with', username)
-} catch (error) {
-  console.error("Login error:", error)
-  setErrorMessage('Wrong username or password')
-  setTimeout(() => {
-    setErrorMessage('')
-  }, 5000)
-}
-  */
-
 
 
   return (
