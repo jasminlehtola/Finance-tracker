@@ -10,7 +10,7 @@ Application features:
 -Clear charts for viewing expenses in euros or as percentages
 
 ### Folder structure:
-<img width="607" height="740" alt="image" src="https://github.com/user-attachments/assets/2bed923e-2120-4f74-97d2-5f71ef6ee4b9" />
+<img width="425" height="518" alt="image" src="https://github.com/user-attachments/assets/2bed923e-2120-4f74-97d2-5f71ef6ee4b9" />
 
 ## Homepage
 
@@ -40,7 +40,8 @@ Application features:
 
 ## Graphs-page
 
-<img width="445" height="307" alt="image" src="https://github.com/user-attachments/assets/4215cd5e-f63a-489e-9f36-dc921ed6c52b" />
+<img width="1061" height="732" alt="image" src="https://github.com/user-attachments/assets/b771872c-ca89-4da1-b436-1286ad321c27" />
+
 
 
 
