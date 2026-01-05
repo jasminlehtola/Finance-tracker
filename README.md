@@ -8,6 +8,13 @@ Application features:
 - Viewing financial data on a monthly basis
 - Clear charts for viewing expenses in euros or as percentages
 
+Tech stack overview:
+- Frontend: React (SPA), React Router, Recharts for data visualization
+- Backend: Node.js with Express, REST API (JSON over HTTP), CORS enabled
+- Authentication: JWT-based authentication
+- Database: PostgreSQL
+- Architecture: Separate frontend and backend applications communicating via REST API
+
 ### Folder structure:
 <img width="303" height="340" alt="image" src="https://github.com/user-attachments/assets/3c42e400-6e7d-45aa-8ec4-d6da8d4c21a5" />
 
