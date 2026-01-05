@@ -1,16 +1,15 @@
 # Finance Tracker
-Finance Tracker is a personal finance management application that allows users to record and track monthly income and expenses and view how much savings have accumulated each month.
-The application also provides a graphical overview of financial trends.
+Finance Tracker is a personal finance management application that allows users to record and track monthly income and expenses and view how much savings have accumulated each month. The application also provides a graphical overview of financial trends.
 
 Application features:
--User account login
--Adding and deleting income and expenses
--Tracking savings
--Viewing financial data on a monthly basis
--Clear charts for viewing expenses in euros or as percentages
+- User account login
+- Adding and deleting income and expenses
+- Tracking savings
+- Viewing financial data on a monthly basis
+- Clear charts for viewing expenses in euros or as percentages
 
 ### Folder structure:
-<img width="425" height="518" alt="image" src="https://github.com/user-attachments/assets/2bed923e-2120-4f74-97d2-5f71ef6ee4b9" />
+<img width="303" height="340" alt="image" src="https://github.com/user-attachments/assets/3c42e400-6e7d-45aa-8ec4-d6da8d4c21a5" />
 
 ## Homepage
 
